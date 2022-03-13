@@ -40,19 +40,19 @@ var ball = {
 // Random speed
 function getRandomSpeed(pos) {
     var min = -1,
-        max = 1.5;
+        max = 2;
     switch (pos) {
         case 'top':
-            return [randomNumFrom(min, max), randomNumFrom(0.1, max)];
+            return [randomNumFrom(min, max), randomNumFrom(0.01, max)];
             break;
         case 'right':
-            return [randomNumFrom(min, -0.1), randomNumFrom(min, max)];
+            return [randomNumFrom(min, -0.01), randomNumFrom(min, max)];
             break;
         case 'bottom':
-            return [randomNumFrom(min, max), randomNumFrom(min, -0.1)];
+            return [randomNumFrom(min, max), randomNumFrom(min, -0.01)];
             break;
         case 'left':
-            return [randomNumFrom(0.1, max), randomNumFrom(min, max)];
+            return [randomNumFrom(0.01, max), randomNumFrom(min, max)];
             break;
         default:
             return;
@@ -126,7 +126,7 @@ function randomSidePos(length) {
 function renderBalls() {
     Array.prototype.forEach.call(balls, function(b) {
         if (!b.hasOwnProperty('type')) {
-            ctx.fillStyle = 'rgba(' + ball_color.r + ',' + ball_color.g + ',' + ball_color.b + ',' + b.alpha + ')';
+            ctx.fillStyle = 'rgba(' + ball_color.r + ',' + ball_color.g + ',' + ball_color.b + ',' + "0" + ')';
             ctx.beginPath();
             ctx.arc(b.x, b.y, R, 0, Math.PI * 2, true);
             ctx.closePath();
@@ -142,7 +142,7 @@ function updateBalls() {
         b.x += b.vx;
         b.y += b.vy;
 
-        if (b.x > -(50) && b.x < (can_w + 50) && b.y > -(50) && b.y < (can_h + 50)) {
+        if (b.x > -(150) && b.x < (can_w + 150) && b.y > -(150) && b.y < (can_h + 150)) {
             new_balls.push(b);
         }
 
@@ -169,8 +169,16 @@ function renderLines() {
 
             if (fraction < 1) {
                 alpha = (1 - fraction).toString();
-
-                ctx.strokeStyle = 'rgba(150,150,150,' + alpha + ')';
+                if (balls[i].y <400){
+                    ctx.strokeStyle = 'rgba(0, 0, 255,' + alpha + ')';
+                }else {
+                    ctx.strokeStyle = 'rgba(252, 255, 0,' + alpha + ')';
+                }
+                if (balls[j].y <400){
+                    ctx.strokeStyle = 'rgba(0, 0, 255,' + alpha + ')';
+                }else {
+                    ctx.strokeStyle = 'rgba(252, 255, 0,' + alpha + ')';
+                }
                 ctx.lineWidth = link_line_width;
 
                 ctx.beginPath();
@@ -193,7 +201,7 @@ function getDisOf(b1, b2) {
 
 // add balls if there a little balls
 function addBallIfy() {
-    if (balls.length < 80) {
+    if (balls.length < 100) {
         balls.push(getRandomBall());
     }
 }
@@ -241,7 +249,7 @@ window.addEventListener('resize', function(e) {
 
 function goMovie() {
     initCanvas();
-    initBalls(88);
+    initBalls(100);
     window.requestAnimationFrame(render);
 }
 goMovie();
@@ -267,7 +275,7 @@ canvas.addEventListener('mousemove', function(e) {
     mouse_ball.y = e.pageY;
 });
 
-sometext()
+//sometext()
 
 function sometext() {
     console.clear();

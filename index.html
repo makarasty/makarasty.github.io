@@ -471,24 +471,24 @@
     }
 </style>
 <script>
-    window.onkeydown = function(evt) {
-        if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false
-    };
-    window.onkeypress = function(evt) {
-        if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false;
-    };
+window.onkeydown = function(evt) {
+    if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false
+};
+window.onkeypress = function(evt) {
+    if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false;
+};
 
-    function r(e) {
-        if ((e.which || e.keyCode) == 116) e.preventDefault();
-    };
-    //$(document).on("keydown", r);
-    document.ondragstart = noselect;
-    document.onselectstart = noselect;
-    document.oncontextmenu = noselect;
+function r(e) {
+    if ((e.which || e.keyCode) == 116) e.preventDefault();
+};
+//$(document).on("keydown", r);
+document.ondragstart = noselect;
+document.onselectstart = noselect;
+document.oncontextmenu = noselect;
 
-    function noselect() {
-        return false;
-    }
+function noselect() {
+    return false;
+}
 </script>
 
 <body>
@@ -496,17 +496,21 @@
         <div class="content">
             <div id="large-header" class="large-header">
                 <canvas id="nokey"></canvas>
-                <h1 class="main-title unselectable">MKY
+                <h1 class="main-title unselectable">MKY 
                     <div class="thin unselectable" style="font-size: 24px;">
                         <a class="thin unselectable">
                             <a target="_blank" href="/discord.html" style="font-size: 32px;" class="fab fa-discord fa-lg"></a>
                             <a target="_blank" href="/instagram.html" style="font-size: 33px;" class="fab fa-instagram-square fa-lg"></a>
                             <a target="_blank" href="/telegram.html" style="font-size: 33px;" class="fab fa-telegram fa-lg"></a>
+                            <div>
+                                <h5>🇺🇦 Русский военный корабль, иди на хуй!</h5>
+                            </div>
                         </a>
                     </div>
                 </h1>
             </div>
         </div>
+        <h1>Turn on JS 🇺🇦</h1>
         <script src="js/script.js"></script>
 </body>
 
