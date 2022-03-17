@@ -14,31 +14,25 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <header>
-<a class="ua">🇺🇦 </a>
 <nav id='cssmenu'>
+    <div class="ua"><a>🇺🇦 </a></div>
     <div class="logo"><a href="../index.html">MKY </a></div>
     <div id="head-mobile"></div>
     <div class="button"></div>
 <ul>
-<li class='active'><a>Головна</a></li>
-<li><a>Цікавинки</a>
+<li><a href='../../trash/'>Головна</a></li>
+<li class='active'><a>Проєкти</a>
    <ul>
-      <li><a href='./Google-proxy/'>Google proxy</a>
+      <li class='active'><a href=''>Google proxy</a>
+      <li><a href=''>2</a>
    </ul>
 </li>
-<li><a>Проєкти</a>
-    <ul>
-       <li><a>Тут покищо порожньо ＞︿＜</a>
-    </ul>
- </li>
-<li><a href=''>Творець</a></li>
 </ul>
-</nav>
 </header>
 <style>
 *{margin:0;padding:0;text-decoration:none}
 header{position:relative;width:100%;background:#333;}
-.ua{padding:10px;font:18px verdana;float:left;left: 10px;}
+.ua{position:relative;padding:10px;font:18px verdana;float:left;left: -10%;}
 .logo{position:relative;z-index:123;padding:10px;font:18px verdana;color:#ffffff;float:left;width:15%}
 .logo a{color:#e6cb33;}
 nav{position:relative;width:980px;margin:0 auto;}
@@ -47,7 +41,7 @@ nav{position:relative;width:980px;margin:0 auto;}
 #cssmenu #head-mobile{display:none}
 #cssmenu{font-family:sans-serif;background:#333}
 #cssmenu > ul > li{float:left}
-#cssmenu > ul > li > a{padding:15px;font-size:12px;letter-spacing:1px;text-decoration:none;color:#ddd;font-weight:700;}
+#cssmenu > ul > li > a{padding:17px;font-size:12px;letter-spacing:1px;text-decoration:none;color:#ddd;font-weight:700;}
 #cssmenu > ul > li:hover > a,#cssmenu ul li.active a{color:#fff}
 #cssmenu > ul > li:hover,#cssmenu ul li.active:hover,#cssmenu ul li.active,#cssmenu ul li.has-sub.active:hover{background:#c1a818!important;-webkit-transition:background .3s ease;-ms-transition:background .3s ease;transition:background .3s ease;}
 #cssmenu > ul > li.has-sub > a{padding-right:30px}
@@ -68,7 +62,7 @@ nav{position:relative;width:980px;margin:0 auto;}
 #cssmenu ul ul li.has-sub:hover,#cssmenu ul li.has-sub ul li.has-sub ul li:hover{background:#363636;}
 #cssmenu ul ul ul li.active a{border-left:1px solid #333}
 #cssmenu > ul > li.has-sub > ul > li.active > a,#cssmenu > ul ul > li.has-sub > ul > li.active> a{border-top:1px solid #333}
-@media screen and (max-width:1040px){
+@media screen and (max-width:1000px){
 .logo{position:absolute;top:0;left: 0;width:100%;height:46px;text-align:center;padding:10px 0 0 0 ;float:none}
 .logo2{display:none}
 nav{width:100%;}
@@ -116,16 +110,18 @@ html {overflow: hidden;}
 }
 body {
     background: rgb(0, 0, 0);
-    position: relative;
-    z-index: 0;
     color: #7cc576;
     font-weight: 400;
     font-size: 1em;
     font-family: 'Raleway', Calibri, Arial, sans-serif;
 }
 .text {
+    position: absolute;
     text-align: center;
-    margin-top: 2%;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    margin-top: 10%;
     color: #e6cb33;
 }
 @media only screen and (max-width: 768px) {
@@ -133,34 +129,22 @@ body {
         font-size: 3em;
     }
     .text {
-    text-align: center;
-    margin-top: 2%;
-    color: #e6cb33;
-    }
-}
-canvas {
     position: absolute;
-    z-index: -1;
-}
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    font-size: 0.8em;
     text-align: center;
-    color: #646464;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    margin-top: 20%;
+    color: #00ff6a;
+    }
 }
 </style>
 <body>
     <canvas id="nokey">твій браузер не підтримує canvas.</canvas>
     <div class="text">
-        <h2>Тут будуть знаходитись і завантажуваться мої странні проєкти</h2>
-    </div>
-    <div class="footer">
-        <h6>MaKarastY®</h6>
-    </div>
+        <h2>Тут будуть знаходитись і завантажуваться всі мої странні проєкти</h2>
+     </div>
 </body>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="./js/script.js"></script>
-<script src="./js/menu.js"></script>
+<script src="js/script.js"></script>
+<script src="js/menu.js"></script>
 </html>

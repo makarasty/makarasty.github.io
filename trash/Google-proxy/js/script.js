@@ -1,6 +1,6 @@
  //антикопирка
 window.onkeydown = function(evt) {
-    //if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false
+    if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false
 };
 window.onkeypress = function(evt) {
     if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false;
@@ -217,9 +217,9 @@ function getDisOf(b1, b2) {
     return Math.sqrt(delta_x * delta_x + delta_y * delta_y);
 }
 
-// когда мало добавить ище
+// add balls if there a little balls
 function addBallIfy() {
-    if (balls.length < dotstospawn) {
+    if (balls.length < 100) {
         balls.push(getRandomBall());
     }
 }
@@ -260,19 +260,6 @@ function initCanvas() {
 
     can_w = parseInt(canvas.getAttribute('width'));
     can_h = parseInt(canvas.getAttribute('height'));
-    if(can_w >2000){
-        dotstospawn = 150
-    }else if(can_w >1500){
-        dotstospawn = 120
-    }else if(can_w >1000){
-        dotstospawn = 100
-    }else if(can_w >600){
-        dotstospawn = 80
-    }else if(can_w >400){
-        dotstospawn = 60
-    }else {
-        dotstospawn = 50
-    }
 }
 window.addEventListener('resize', function(e) {
     initCanvas();
@@ -280,12 +267,12 @@ window.addEventListener('resize', function(e) {
 
 function goMovie() {
     initCanvas();
-    initBalls(dotstospawn);
+    initBalls(100);
     window.requestAnimationFrame(render);
 }
 goMovie();
 
-// мишка
+// Mouse effect
 canvas.addEventListener('mouseenter', function() {
     mouse_in = true;
     balls.push(mouse_ball);
