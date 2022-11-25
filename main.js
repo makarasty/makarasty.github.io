@@ -12,7 +12,7 @@ const heart = () => {
 	let hearts = ['💜', '💚', '🧡', '💛', '💙']
 	return hearts[Math.floor(Math.random() * hearts.length)]
 }
-var canv = true
+var canv = true, i = 0
 const text = () => {
 	let texts = [
 		'шаг во тьме',
@@ -31,11 +31,12 @@ document.onkeydown = (e) => {
 	else document.title = `MKY - BY MaKarastY ${heart()}`
 
 	if (e.key === 'Backspace') {
+		if (i < 5) return i++
 		let _text = text()
 
 		switch (_text) {
 			case 'шаг во тьме': {
-				canv = false
+				canv = false, i = 0
 				document.querySelector('.large-header').style.removeProperty('background')
 				document.getElementById("onjs").innerHTML = ''
 				document.body.style.backgroundImage = "url('https://hdqwalls.com/wallpapers/reaper-overwatch-5k-ix.jpg')"
@@ -45,7 +46,7 @@ document.onkeydown = (e) => {
 				break
 			}
 			case 'моооооолооооооот пошееееееел': {
-				canv = false
+				canv = false, i = 0
 				document.querySelector('.large-header').style.removeProperty('background')
 				document.getElementById("onjs").innerHTML = ''
 				document.body.style.backgroundImage = "url('https://wallpaperaccess.com/full/2302380.jpg')"
@@ -55,7 +56,7 @@ document.onkeydown = (e) => {
 				break
 			}
 			default: {
-				canv = true
+				canv = true, i = 0
 				document.querySelector('.large-header').style.background = 'rgb(0, 0, 0)'
 				document.getElementById("onjs").innerHTML = 'Turn on JavaScript'
 				document.getElementById("text3").innerHTML = ''
