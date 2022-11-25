@@ -32,12 +32,13 @@
 
 	body {
 		margin: 0;
-		background: #fff;
-		color: #7cc576;
+		background: rgb(0, 0, 0);
 		font-weight: 400;
 		font-size: 1em;
 		line-height: 1.25;
 		font-family: 'Raleway', Calibri, Arial, sans-serif;
+		background-repeat: no-repeat;
+    	background-size: cover;
 	}
 
 	a {
@@ -48,10 +49,7 @@
 	.large-header {
 		position: relative;
 		width: 100%;
-		background: rgb(0, 0, 0);
 		overflow: hidden;
-		background-size: cover;
-		background-position: center center;
 		z-index: 1;
 	}
 
@@ -86,7 +84,7 @@
 
 <body>
 	<div class="container demo-1">
-		<div id="large-header" class="large-header">
+		<div class="large-header">
 			<canvas id="nokey"></canvas>
 			<h1 class="main-title unselectable">MKY
 				<div class="thin unselectable" style="font-size: 24px;">
@@ -98,13 +96,15 @@
 						<a target="_blank" href="relinks/telegram.html" style="font-size: 33px;"
 							class="fab fa-telegram fa-lg"></a>
 						<div>
-							<h5>🇺🇦 Please Close The Sky Over Ukraine</h5>
+							<h5 id="text1">🇺🇦 Please Close The Sky Over Ukraine</h5>
+							<h2 id="text2"></h2>
+							<h6 id="text3"></h6>
 						</div>
 					</a>
 				</div>
 			</h1>
 		</div>
-		<h1 class="main-title unselectable">Turn on JavaScript</h1>
+		<h1 id="onjs" class="main-title unselectable">Turn on JavaScript</h1>
 </body>
 
 <script src="main.js"></script>

@@ -1,12 +1,70 @@
-window.onkeydown = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
-window.onkeypress = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
+// window.onkeydown = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
+// window.onkeypress = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
 document.ondragstart = () => { return false }
 document.onselectstart = () => { return false }
 document.oncontextmenu = () => { return false }
-window.addEventListener('resize', () => initCanvas())
+document.querySelector('.large-header').style.background = 'rgb(0, 0, 0)'
+const cat = () => {
+	let cats = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾']
+	return cats[Math.floor(Math.random() * cats.length)]
+}
 const heart = () => {
-	let hearts = ['💜', '💚', '🧡', '💛', '🤍', '💙']
+	let hearts = ['💜', '💚', '🧡', '💛', '💙']
 	return hearts[Math.floor(Math.random() * hearts.length)]
+}
+var canv = true
+const text = () => {
+	let texts = [
+		'шаг во тьме',
+		`мяу ${heart()}`,
+		`mycryup ${heart()}`,
+		'моооооолооооооот пошееееееел',
+		'🇺🇦 Please Close The Sky Over Ukraine',
+		`overwatch ${heart()}`,
+		`minecraft ${heart()}`,
+		`js, nodejs ${heart()}`
+	]
+	return texts[Math.floor(Math.random() * texts.length)]
+}
+document.onkeydown = (e) => {
+	if (e.key === ' ') document.title = `MKY - BY MaKarastY ${cat()}`
+	else document.title = `MKY - BY MaKarastY ${heart()}`
+
+	if (e.key === 'Backspace') {
+		let _text = text()
+
+		switch (_text) {
+			case 'шаг во тьме': {
+				canv = false
+				document.querySelector('.large-header').style.removeProperty('background')
+				document.getElementById("onjs").innerHTML = ''
+				document.body.style.backgroundImage = "url('https://hdqwalls.com/wallpapers/reaper-overwatch-5k-ix.jpg')"
+				document.getElementById("text1").innerHTML = ''
+				document.getElementById("text2").innerHTML = _text
+				document.getElementById("text3").innerHTML = 'Джонни топ игрок'
+				break
+			}
+			case 'моооооолооооооот пошееееееел': {
+				canv = false
+				document.querySelector('.large-header').style.removeProperty('background')
+				document.getElementById("onjs").innerHTML = ''
+				document.body.style.backgroundImage = "url('https://wallpaperaccess.com/full/2302380.jpg')"
+				document.getElementById("text1").innerHTML = ''
+				document.getElementById("text2").innerHTML = _text
+				document.getElementById("text3").innerHTML = ''
+				break
+			}
+			default: {
+				canv = true
+				document.querySelector('.large-header').style.background = 'rgb(0, 0, 0)'
+				document.getElementById("onjs").innerHTML = 'Turn on JavaScript'
+				document.getElementById("text3").innerHTML = ''
+				document.getElementById("text2").innerHTML = ''
+				document.getElementById("text1").innerHTML = _text
+				break
+			}
+		}
+	}
 }
 document.addEventListener('visibilitychange',
 	() => {
@@ -14,6 +72,7 @@ document.addEventListener('visibilitychange',
 	}, false
 )
 
+window.addEventListener('resize', () => initCanvas())
 let canvas = document.getElementById('nokey'),
 	can_w = parseInt(canvas.getAttribute('width')),
 	can_h = parseInt(canvas.getAttribute('height')),
@@ -144,10 +203,12 @@ const renderLines = () => {
 
 function render() {
 	ctx.clearRect(0, 0, can_w, can_h)
-	renderBalls()
-	renderLines()
-	updateBalls()
-	addBallIfy()
+	if (canv) {
+		renderBalls()
+		renderLines()
+		updateBalls()
+		addBallIfy()
+	}
 	window.requestAnimationFrame(render)
 }
 function initBalls(num) {
