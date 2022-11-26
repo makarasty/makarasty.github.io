@@ -23,8 +23,11 @@ const randomItem = (n) => {
 				'https://www.pixel4k.com/wp-content/uploads/2018/11/brigitte-overwatch-character-4k_1543621087.jpg',
 				'https://s.ecrater.com/stores/408554/5a97ed6a6ba9f_408554b.jpg',
 				'https://images.hdqwalls.com/download/brigitte-overwatch-5k-2018-d4-5120x2880.jpg',
-				// '',
-				// '',
+				'https://images.noob-club.ru/news/2018/03/q5588b1j32.jpg',
+				'https://cdn.discordapp.com/attachments/717073717020065863/1046166861282295840/photo_2022-11-26_23-53-48.jpg',
+				'https://picstatio.com/large/bb0146/Brigitte-Overwatch-girl.jpg',
+				'https://images.noob-club.ru/news/2018/03/9co40m51vw.jpg',
+				'https://cdn.discordapp.com/attachments/717073717020065863/1046167015074840726/photo_2022-11-26_23-54-58.jpg'
 			]
 			break
 		}
