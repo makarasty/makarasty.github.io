@@ -1,68 +1,225 @@
-window.onkeydown = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
-window.onkeypress = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
+// window.onkeydown = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
+// window.onkeypress = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
 document.ondragstart = () => { return false }
 document.onselectstart = () => { return false }
 document.oncontextmenu = () => { return false }
 document.querySelector('.large-header').style.background = 'rgb(0, 0, 0)'
-const cat = () => {
-	let cats = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾']
-	return cats[Math.floor(Math.random() * cats.length)]
+document.getElementById("pash").style.visibility = 'hidden'
+document.getElementById("pash").style.display = "none"
+
+var canv = true, i = 0, a, canvasNumber = 1
+
+const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) { window.setTimeout(callback, 1000 / 60) }
+
+const randomItem = (n) => {
+	let arr
+	switch (n) {
+		case 'brigitte': {
+			arr = [
+				'https://wallpapercave.com/wp/wp3028712.jpg',
+				'https://wallpapercave.com/wp/wp3028776.jpg',
+				'https://www.hd-tecnologia.com/imagenes/articulos/2018/03/brigitte-ya-se-puede-disfrutar-en-overwatch.jpg',
+				'https://wallpapercave.com/wp/wp3028692.jpg',
+				'https://www.pixel4k.com/wp-content/uploads/2018/11/brigitte-overwatch-character-4k_1543621087.jpg',
+				'https://s.ecrater.com/stores/408554/5a97ed6a6ba9f_408554b.jpg',
+				'https://images.hdqwalls.com/download/brigitte-overwatch-5k-2018-d4-5120x2880.jpg',
+				// '',
+				// '',
+			]
+			break
+		}
+		case 'reinhard': {
+			arr = [
+				'https://wallpaperaccess.com/full/2302380.jpg',
+				'https://hdqwalls.com/wallpapers/reinhardt-in-overwatch-ap.jpg',
+				'https://wallpapertops.com/walldb/original/c/3/9/133576.jpg',
+				'https://www.top10esports.com/wp-content/uploads/2019/10/reinhardt-screenshot-007.jpg',
+				'https://wallpaperaccess.com/full/2302411.jpg',
+				'https://wallpapertops.com/walldb/original/d/c/4/111394.jpg',
+				'https://images7.alphacoders.com/693/693269.png',
+				// '',
+				// '',
+			]
+			break
+		}
+		case 'reaper': {
+			arr = [
+				'https://hdqwalls.com/wallpapers/reaper-overwatch-5k-ix.jpg',
+				'https://www.gamephd.com/wp-content/uploads/2016/07/Overwatch-Reaper-4K-Wallpaper.jpg',
+				'https://wallpapercave.com/wp/wp1953077.jpg',
+				'https://getwallpapers.com/wallpaper/full/8/c/1/1127429-top-overwatch-reaper-wallpapers-3840x2160-for-mobile.jpg',
+				'https://www.pixel4k.com/wp-content/uploads/2020/01/genji-overwatch-2-4k-38-3840x2160-1.jpg',
+				'https://images8.alphacoders.com/914/914471.jpg',
+				'https://images.hdqwalls.com/wallpapers/reaper-overwatch-artwork-sd.jpg',
+				'https://hdqwalls.com/wallpapers/reaper-overwatch-halloween-4k-7h.jpg',
+				'https://wallpapertag.com/wallpaper/full/8/1/5/370115-free-download-overwatch-reaper-wallpaper-2560x1440-ipad-retina.jpg',
+			]
+			break
+		}
+		case 'd.va': {
+			arr = [
+				'https://wallpaperaccess.com/full/1121358.jpg',
+				'https://www.wallpaperflare.com/static/414/186/412/d-va-overwatch-overwatch-d-va-wallpaper.jpg',
+				'https://wallpapercave.com/wp/wp3640234.jpg',
+				'https://images.hdqwalls.com/download/dva-overwatch-to-2048x1152.jpg',
+				'https://images2.alphacoders.com/814/814677.jpg',
+				'https://wallpapertag.com/wallpaper/full/7/2/c/199233-overwatch-dva-wallpaper-3840x2160-for-iphone-6.jpg',
+				'https://wallpapercrafter.com/desktop/115142-Overwatch-video-games-D.Va-Overwatch-anime-digital-art-tight-clothing.jpg',
+				'https://picstatio.com/download/3840x2160/fb56ca/dva-overwatch-game-robot.jpg',
+				'https://wallpapercave.com/wp/wp3640202.jpg',
+			]
+			break
+		}
+		case 'mercy': {
+			arr = [
+				'https://hdqwalls.com/wallpapers/overwatch-mercy-fanart-xn.jpg',
+				'https://www.pixel4k.com/wp-content/uploads/2019/10/mercy-overwatch-art_1570393329.jpg',
+				'https://wallpapercave.com/wp/wp5019877.jpg',
+				'https://hdqwalls.com/wallpapers/mercy-overwatch-digital-art-5k-fi.jpg',
+				'https://hdqwalls.com/wallpapers/mercy-overwatch-blackwatch-5k-01.jpg',
+				'https://hdqwalls.com/wallpapers/overwatch-mercy-image.jpg',
+				'https://images.hdqwalls.com/download/mercy-overwatch-2-4k-ug-2560x1600.jpg',
+				'https://hdqwalls.com/wallpapers/mercy-overwatch-fantasy-5k-td.jpg',
+				'https://cdn1.dotesports.com/wp-content/uploads/2018/08/11120728/bc69c3a6-4ea1-42b8-87fa-f23f2452be37.jpg',
+			]
+			break
+		}
+		case 'cat': {
+			arr = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾']
+			break
+		}
+		case 'heart': {
+			arr = ['💜', '💚', '🧡', '💛', '💙']
+			break
+		}
+		case 'text': {
+			arr = [
+				'reaper',
+				'reinhard',
+				'brigitte',
+				'd.va',
+				'mercy',
+				'',
+				'',
+			]
+			break
+		}
+	}
+	return arr[Math.floor(Math.random() * arr.length)]
 }
-const heart = () => {
-	let hearts = ['💜', '💚', '🧡', '💛', '💙']
-	return hearts[Math.floor(Math.random() * hearts.length)]
-}
-var canv = true, i = 0
-const text = () => {
-	let texts = [
-		'шаг во тьме',
-		`мяу ${heart()}`,
-		`mycryup ${heart()}`,
-		'моооооолооооооот пошееееееел',
-		'🇺🇦 Please Close The Sky Over Ukraine',
-		`overwatch ${heart()}`,
-		`minecraft ${heart()}`,
-		`js, nodejs ${heart()}`
-	]
-	return texts[Math.floor(Math.random() * texts.length)]
+function SetTheme(options = {}) {
+	title = options.title, bcimg = options.bcimg, text1 = options.text1, text2 = options.text2, text3 = options.text3, mky = options.mky, js = options.js, bc = options.bc
+	document.title = !title ? `MKY - BY MaKarastY ${randomItem('heart')}` : title
+	document.body.style.backgroundImage = !bcimg ? '' : `url(${randomItem(bcimg)}`
+	clearInterval(a)
+	a = setInterval(
+		() => {
+			document.body.style.backgroundImage = `url(${randomItem(bcimg)}`
+		}, 8000)
+
+
+	!bc ? document.querySelector('.large-header').style.removeProperty('background')
+		: document.querySelector('.large-header').style.background = 'rgb(0, 0, 0)'
+	canv = options.canv
+	document.getElementById("pash").style.visibility = mky ? 'hidden' : 'visible'
+	document.getElementById("pash").style.display = mky ? "none" : "block"
+	document.getElementById("mky").style.visibility = !mky ? 'hidden' : 'visible'
+	document.getElementById("mky").style.display = !mky ? "none" : "block"
+	document.getElementById("onjs").innerHTML = js ? 'Turn on JavaScript' : js
+	document.getElementById("text1").innerHTML = !text1 ? '' : text1
+	document.getElementById("text2").innerHTML = !text2 ? '' : text2
+	document.getElementById("text3").innerHTML = !text3 ? '' : text3
 }
 document.onkeydown = (e) => {
-	if (e.key === ' ') document.title = `MKY - BY MaKarastY ${cat()}`
-	else document.title = `MKY - BY MaKarastY ${heart()}`
+	document.title = e.key === ' ' ? `MKY - BY MaKarastY ${randomItem('cat')}` : `MKY - BY MaKarastY ${randomItem('heart')}`
 
 	if (e.key === 'Backspace') {
 		if (i < 5) return i++
-		let _text = text()
-
+		let _text = randomItem('text')
 		switch (_text) {
-			case 'шаг во тьме': {
-				canv = false, i = 0
-				document.querySelector('.large-header').style.removeProperty('background')
-				document.getElementById("onjs").innerHTML = ''
-				document.body.style.backgroundImage = "url('https://hdqwalls.com/wallpapers/reaper-overwatch-5k-ix.jpg')"
-				document.getElementById("text1").innerHTML = ''
-				document.getElementById("text2").innerHTML = _text
-				document.getElementById("text3").innerHTML = 'Джонни топ игрок'
-				break
+			case 'mercy': {
+				i = 0, canvasNumber = 2
+				return SetTheme({
+					title: '',
+					text1: 'герои не умерают',
+					text2: '',
+					text3: '',
+					canv: false,
+					bc: false,
+					mky: false,
+					bcimg: 'mercy',
+					js: '',
+				})
 			}
-			case 'моооооолооооооот пошееееееел': {
-				canv = false, i = 0
-				document.querySelector('.large-header').style.removeProperty('background')
-				document.getElementById("onjs").innerHTML = ''
-				document.body.style.backgroundImage = "url('https://wallpaperaccess.com/full/2302380.jpg')"
-				document.getElementById("text1").innerHTML = ''
-				document.getElementById("text2").innerHTML = _text
-				document.getElementById("text3").innerHTML = ''
-				break
+			case 'reaper': {
+				i = 0, canvasNumber = 2
+				return SetTheme({
+					title: '',
+					text1: 'шаг во тьме',
+					text2: '',
+					text3: 'Джонни топ игрок',
+					canv: false,
+					bc: false,
+					mky: false,
+					bcimg: 'reaper',
+					js: '',
+				})
+			}
+			case 'd.va': {
+				i = 0, canvasNumber = 2
+				return SetTheme({
+					title: '',
+					text1: 'попробуйка это занерфить <3',
+					text2: '',
+					text3: '',
+					canv: false,
+					bc: false,
+					mky: false,
+					bcimg: 'd.va',
+					js: '',
+				})
+			}
+			case 'reinhard': {
+				i = 0, canvasNumber = 2
+				return SetTheme({
+					title: '',
+					text1: 'моооооолооооооот пошееееееел',
+					text2: '',
+					text3: '',
+					canv: false,
+					bc: false,
+					mky: false,
+					bcimg: 'reinhard',
+					js: '',
+				})
+			}
+			case 'brigitte': {
+				i = 0, canvasNumber = 2
+				return SetTheme({
+					title: '',
+					text1: 'нужно больше дочурности в дочурках',
+					text2: '',
+					text3: '',
+					canv: false,
+					bc: false,
+					mky: false,
+					bcimg: 'brigitte',
+					js: '',
+				})
 			}
 			default: {
-				canv = true, i = 0
-				document.querySelector('.large-header').style.background = 'rgb(0, 0, 0)'
-				document.getElementById("onjs").innerHTML = 'Turn on JavaScript'
-				document.getElementById("text3").innerHTML = ''
-				document.getElementById("text2").innerHTML = ''
-				document.getElementById("text1").innerHTML = _text
-				break
+				i = 0, canvasNumber = 1
+				return SetTheme({
+					title: '',
+					text1: '',
+					text2: '',
+					text3: '',
+					canv: true,
+					bc: true,
+					mky: true,
+					bcimg: '',
+					js: '1',
+				})
 			}
 		}
 	}
@@ -72,7 +229,6 @@ document.addEventListener('visibilitychange',
 		document.title = `MKY - BY MaKarastY ${heart()}`
 	}, false
 )
-
 window.addEventListener('resize', () => initCanvas())
 let canvas = document.getElementById('nokey'),
 	can_w = parseInt(canvas.getAttribute('width')),
@@ -91,11 +247,8 @@ let ball = {
 
 let R = 2,
 	balls = [],
-	alpha_f = 0.03,
-	alpha_phase = 0,
-	link_line_width = 0.8,
+	alpha_f = 1,
 	dis_limit = 260,
-	add_mouse_point = true,
 	mouse_ball = {
 		x: 0,
 		y: 0,
@@ -112,10 +265,10 @@ const getDisOf = (b1, b2) => { return Math.sqrt(Math.abs(b1.x - b2.x) ** 2 + Mat
 const addBallIfy = () => { if (balls.length < dotstospawn) balls.push(getRandomBall()) }
 const getRandomSpeed = (pos) => {
 	switch (pos) {
-		case 'top': return [randomNumFrom(-2, 2), randomNumFrom(0.01, 2)]
-		case 'right': return [randomNumFrom(-2, -0.01), randomNumFrom(-2, 2)]
-		case 'bottom': return [randomNumFrom(-2, 2), randomNumFrom(-2, -0.01)]
-		case 'left': return [randomNumFrom(0.01, 2), randomNumFrom(-2, 2)]
+		case 'top': return [randomNumFrom(-2, 2), randomNumFrom(0.05, 2)]
+		case 'right': return [randomNumFrom(-2, -0.05), randomNumFrom(-2, 2)]
+		case 'bottom': return [randomNumFrom(-2, 2), randomNumFrom(-2, -0.05)]
+		case 'left': return [randomNumFrom(0.05, 2), randomNumFrom(-2, 2)]
 		default: return
 	}
 }
@@ -159,22 +312,11 @@ const getRandomBall = () => {
 		}
 	}
 }
-const renderBalls = () => {
-	Array.prototype.forEach.call(balls, function (b) {
-		if (!b.hasOwnProperty('type')) {
-			ctx.beginPath()
-			ctx.arc(b.x, b.y, R, 0, Math.PI * 2, true)
-			ctx.closePath()
-			ctx.fill()
-		}
-	})
-}
 const updateBalls = () => {
 	let new_balls = []
 	Array.prototype.forEach.call(balls, function (b) {
-		b.x += b.vx
-		b.y += b.vy
-		if (b.x > -(150) && b.x < (can_w + 150) && b.y > -(150) && b.y < (can_h + 150)) new_balls.push(b)
+		b.x += b.vx, b.y += b.vy
+		if (b.x > -(200) && b.x < (can_w + 200) && b.y > -(200) && b.y < (can_h + 200)) new_balls.push(b)
 		b.phase += alpha_f
 		b.alpha = Math.abs(Math.cos(b.phase))
 	})
@@ -189,9 +331,7 @@ const renderLines = () => {
 				alpha = (1 - fraction).toString()
 				if (balls[i].y < can_h / 1.85) ctx.strokeStyle = 'rgba(0, 0, 255,' + alpha + ')'
 				else ctx.strokeStyle = 'rgba(252, 255, 0,' + alpha + ')'
-				if (balls[j].y < can_h / 1.85) ctx.strokeStyle = 'rgba(0, 0, 255,' + alpha + ')'
-				else ctx.strokeStyle = 'rgba(252, 255, 0,' + alpha + ')'
-				ctx.lineWidth = link_line_width
+				ctx.lineWidth = 0.8
 				ctx.beginPath()
 				ctx.moveTo(balls[i].x, balls[i].y)
 				ctx.lineTo(balls[j].x, balls[j].y)
@@ -203,9 +343,8 @@ const renderLines = () => {
 }
 
 function render() {
-	ctx.clearRect(0, 0, can_w, can_h)
 	if (canv) {
-		renderBalls()
+		ctx.clearRect(0, 0, can_w, can_h)
 		renderLines()
 		updateBalls()
 		addBallIfy()
@@ -230,25 +369,16 @@ function initCanvas() {
 	canvas.setAttribute('height', window.innerHeight)
 	can_w = parseInt(canvas.getAttribute('width'))
 	can_h = parseInt(canvas.getAttribute('height'))
-	if (can_w > 2000) dotstospawn = 150
-	else if (can_w > 1500) dotstospawn = 120
-	else if (can_w > 1000) dotstospawn = 100
-	else if (can_w > 600) dotstospawn = 80
-	else if (can_w > 400) dotstospawn = 60
-	else dotstospawn = 50
+	if (can_w > 2000) dotstospawn = 120
+	else if (can_w > 1500) dotstospawn = 100
+	else if (can_w > 1000) dotstospawn = 80
+	else if (can_w > 600) dotstospawn = 60
+	else if (can_w > 400) dotstospawn = 50
+	else dotstospawn = 30
 }
 function goMovie() {
 	initCanvas()
 	initBalls(dotstospawn)
 	window.requestAnimationFrame(render)
 }
-
-canvas.addEventListener('mouseenter', function () { balls.push(mouse_ball) })
-canvas.addEventListener('mousemove', function (e) { mouse_ball.x = e.pageX, mouse_ball.y = e.pageY })
-canvas.addEventListener('mouseleave', function () {
-	let new_balls = []
-	Array.prototype.forEach.call(balls, function (b) { if (!b.hasOwnProperty('type')) new_balls.push(b) })
-	balls = new_balls.slice(0)
-})
-
 goMovie()

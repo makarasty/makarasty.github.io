@@ -38,7 +38,7 @@
 		line-height: 1.25;
 		font-family: 'Raleway', Calibri, Arial, sans-serif;
 		background-repeat: no-repeat;
-    	background-size: cover;
+		background-size: cover;
 	}
 
 	a {
@@ -53,7 +53,7 @@
 		z-index: 1;
 	}
 
-	.main-title {
+	.main {
 		position: absolute;
 		margin: 0;
 		padding: 0;
@@ -65,46 +65,51 @@
 		transform: translate3d(-50%, -50%, 0);
 	}
 
-	.demo-1 .main-title {
+	.shadow {
+		text-shadow: black 0.1em 0.1em 0.1em;
+	}
+
+	.demo .main {
 		text-transform: uppercase;
 		font-size: 4.2em;
 		letter-spacing: 0.1em;
 	}
 
 	@media only screen and (max-width: 768px) {
-		.demo-1 .main-title {
+		.demo .main {
 			font-size: 3em;
 		}
-	}
-
-	footer {
-		background: #000000;
 	}
 </style>
 
 <body>
-	<div class="container demo-1">
+	<div id="mky" class="demo">
 		<div class="large-header">
 			<canvas id="nokey"></canvas>
-			<h1 class="main-title unselectable">MKY
-				<div class="thin unselectable" style="font-size: 24px;">
-					<a class="thin unselectable">
-						<a target="_blank" href="relinks/discord.html" style="font-size: 32px;"
-							class="fab fa-discord fa-lg"></a>
-						<a target="_blank" href="relinks/github.html" style="font-size: 33px;"
-							class="fab fa-github fa-lg"></a>
-						<a target="_blank" href="relinks/telegram.html" style="font-size: 33px;"
-							class="fab fa-telegram fa-lg"></a>
-						<div>
-							<h5 id="text1">🇺🇦 Please Close The Sky Over Ukraine</h5>
-							<h2 id="text2"></h2>
-							<h6 id="text3"></h6>
-						</div>
-					</a>
+			<h1 class="main unselectable">MKY
+				<div class="unselectable" style="font-size: 24px;">
+					<a target="_blank" href="relinks/discord.html" style="font-size: 32px;"
+						class="fab fa-discord fa-lg"></a>
+					<a target="_blank" href="relinks/github.html" style="font-size: 33px;"
+						class="fab fa-github fa-lg"></a>
+					<a target="_blank" href="relinks/telegram.html" style="font-size: 33px;"
+						class="fab fa-telegram fa-lg"></a>
+					<h5>🇺🇦 Please Close The Sky Over Ukraine</h5>
 				</div>
 			</h1>
 		</div>
-		<h1 id="onjs" class="main-title unselectable">Turn on JavaScript</h1>
+	</div>
+	<div id="pash" class="demo">
+		<canvas id="nokey"></canvas>
+		<h1 class="main unselectable shadow">
+			<div class="unselectable" style="font-size: 24px;">
+				<h4 class="shadow" id="text1"></h4>
+				<h5 class="shadow" id="text2"></h5>
+				<h6 class="shadow" id="text3"></h6>
+			</div>
+		</h1>
+	</div>
+	<h1 id="onjs" class="main-title unselectable">Turn on JavaScript</h1>
 </body>
 
 <script src="main.js"></script>
