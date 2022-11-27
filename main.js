@@ -1,5 +1,5 @@
-// window.onkeydown = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
-// window.onkeypress = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
+window.onkeydown = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
+window.onkeypress = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
 document.ondragstart = () => { return false }
 document.onselectstart = () => { return false }
 document.oncontextmenu = () => { return false }
@@ -11,11 +11,10 @@ var canv = true, i = 0, a, canvasNumber = 1
 
 const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) { window.setTimeout(callback, 1000 / 60) }
 
-const randomItem = (n) => {
-	let arr
+const randomItemsCase = (n) => {
 	switch (n) {
 		case 'brigitte': {
-			arr = [
+			return [
 				'https://wallpapercave.com/wp/wp3028712.jpg',
 				'https://wallpapercave.com/wp/wp3028776.jpg',
 				'https://www.hd-tecnologia.com/imagenes/articulos/2018/03/brigitte-ya-se-puede-disfrutar-en-overwatch.jpg',
@@ -28,10 +27,9 @@ const randomItem = (n) => {
 				'https://images.noob-club.ru/news/2018/03/9co40m51vw.jpg',
 				'https://cdn.discordapp.com/attachments/717073717020065863/1046167015074840726/photo_2022-11-26_23-54-58.jpg'
 			]
-			break
 		}
 		case 'reinhard': {
-			arr = [
+			return [
 				'https://wallpaperaccess.com/full/2302380.jpg',
 				'https://hdqwalls.com/wallpapers/reinhardt-in-overwatch-ap.jpg',
 				'https://wallpapertops.com/walldb/original/c/3/9/133576.jpg',
@@ -42,10 +40,9 @@ const randomItem = (n) => {
 				// '',
 				// '',
 			]
-			break
 		}
 		case 'reaper': {
-			arr = [
+			return [
 				'https://hdqwalls.com/wallpapers/reaper-overwatch-5k-ix.jpg',
 				'https://www.gamephd.com/wp-content/uploads/2016/07/Overwatch-Reaper-4K-Wallpaper.jpg',
 				'https://wallpapercave.com/wp/wp1953077.jpg',
@@ -56,10 +53,9 @@ const randomItem = (n) => {
 				'https://hdqwalls.com/wallpapers/reaper-overwatch-halloween-4k-7h.jpg',
 				'https://wallpapertag.com/wallpaper/full/8/1/5/370115-free-download-overwatch-reaper-wallpaper-2560x1440-ipad-retina.jpg',
 			]
-			break
 		}
 		case 'd.va': {
-			arr = [
+			return [
 				'https://wallpaperaccess.com/full/1121358.jpg',
 				'https://www.wallpaperflare.com/static/414/186/412/d-va-overwatch-overwatch-d-va-wallpaper.jpg',
 				'https://wallpapercave.com/wp/wp3640234.jpg',
@@ -70,10 +66,9 @@ const randomItem = (n) => {
 				'https://picstatio.com/download/3840x2160/fb56ca/dva-overwatch-game-robot.jpg',
 				'https://wallpapercave.com/wp/wp3640202.jpg',
 			]
-			break
 		}
 		case 'mercy': {
-			arr = [
+			return [
 				'https://hdqwalls.com/wallpapers/overwatch-mercy-fanart-xn.jpg',
 				'https://www.pixel4k.com/wp-content/uploads/2019/10/mercy-overwatch-art_1570393329.jpg',
 				'https://wallpapercave.com/wp/wp5019877.jpg',
@@ -84,18 +79,31 @@ const randomItem = (n) => {
 				'https://hdqwalls.com/wallpapers/mercy-overwatch-fantasy-5k-td.jpg',
 				'https://cdn1.dotesports.com/wp-content/uploads/2018/08/11120728/bc69c3a6-4ea1-42b8-87fa-f23f2452be37.jpg',
 			]
-			break
 		}
 		case 'cat': {
-			arr = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾']
-			break
+			return [
+				'😺',
+				'😸',
+				'😹',
+				'😻',
+				'😼',
+				'😽',
+				'🙀',
+				'😿',
+				'😾'
+			]
 		}
 		case 'heart': {
-			arr = ['💜', '💚', '🧡', '💛', '💙']
-			break
+			return [
+				'💜',
+				'💚',
+				'🧡',
+				'💛',
+				'💙'
+			]
 		}
 		case 'text': {
-			arr = [
+			return [
 				'reaper',
 				'reinhard',
 				'brigitte',
@@ -104,11 +112,29 @@ const randomItem = (n) => {
 				'',
 				'',
 			]
-			break
 		}
 	}
+}
+
+const randomItem = (n) => {
+	let arr = randomItemsCase(n)
 	return arr[Math.floor(Math.random() * arr.length)]
 }
+
+function loadAllImges() {
+	[].concat(
+		randomItemsCase('brigitte'),
+		randomItemsCase('reinhard'),
+		randomItemsCase('reaper'),
+		randomItemsCase('d.va'),
+		randomItemsCase('mercy')
+	).forEach(
+		link => {
+			new Image(0, 0).src = link
+		}
+	)
+}
+
 function SetTheme(options = {}) {
 	title = options.title, bcimg = options.bcimg, text1 = options.text1, text2 = options.text2, text3 = options.text3, mky = options.mky, js = options.js, bc = options.bc
 	document.title = !title ? `MKY - BY MaKarastY ${randomItem('heart')}` : title
@@ -118,8 +144,6 @@ function SetTheme(options = {}) {
 		() => {
 			document.body.style.backgroundImage = `url(${randomItem(bcimg)}`
 		}, 8000)
-
-
 	!bc ? document.querySelector('.large-header').style.removeProperty('background')
 		: document.querySelector('.large-header').style.background = 'rgb(0, 0, 0)'
 	canv = options.canv
@@ -138,6 +162,7 @@ document.onkeydown = (e) => {
 	if (e.key === 'Backspace') {
 		if (i < 5) return i++
 		let _text = randomItem('text')
+		loadAllImges()
 		switch (_text) {
 			case 'mercy': {
 				i = 0, canvasNumber = 2
