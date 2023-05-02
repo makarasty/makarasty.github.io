@@ -1,17 +1,14 @@
-window.onkeydown = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
-window.onkeypress = (evt) => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
-document.ondragstart = () => { return false }
-document.onselectstart = () => { return false }
-document.oncontextmenu = () => { return false }
+window.onkeydown = evt => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
+window.onkeypress = evt => { if (evt.keyCode == 123 || evt.keyCode == 85 || evt.keyCode == 17 || evt.keyCode == 16 || evt.keyCode == 74 || evt.keyCode == 116 || evt.keyCode == 73) return false }
+document.ondragstart = () => false
+document.onselectstart = () => false
+document.oncontextmenu = () => false
 document.querySelector('.large-header').style.background = 'rgb(0, 0, 0)'
 document.getElementById("pash").style.visibility = 'hidden'
 document.getElementById("pash").style.display = "none"
-
 var canv = true, i = 0, a, canvasNumber = 1
-
 const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) { window.setTimeout(callback, 1000 / 60) }
-
-const randomItemsCase = (n) => {
+const randomItemsCase = n => {
 	switch (n) {
 		case 'brigitte': {
 			return [
@@ -37,8 +34,6 @@ const randomItemsCase = (n) => {
 				'https://wallpaperaccess.com/full/2302411.jpg',
 				'https://wallpapertops.com/walldb/original/d/c/4/111394.jpg',
 				'https://images7.alphacoders.com/693/693269.png',
-				// '',
-				// '',
 			]
 		}
 		case 'reaper': {
@@ -115,36 +110,30 @@ const randomItemsCase = (n) => {
 		}
 	}
 }
-
-const randomItem = (n) => {
+function randomItem(n) {
 	let arr = randomItemsCase(n)
 	return arr[Math.floor(Math.random() * arr.length)]
 }
-
 function loadAllImges() {
-	[].concat(
+	const allCases = [].concat(
 		randomItemsCase('brigitte'),
 		randomItemsCase('reinhard'),
 		randomItemsCase('reaper'),
 		randomItemsCase('d.va'),
 		randomItemsCase('mercy')
-	).forEach(
-		link => {
-			new Image(0, 0).src = link
-		}
 	)
+	for (link of allCases) {
+		new Image(0, 0).src = link
+	}
 }
-
 function SetTheme(options = {}) {
 	title = options.title, bcimg = options.bcimg, text1 = options.text1, text2 = options.text2, text3 = options.text3, mky = options.mky, js = options.js, bc = options.bc
 	document.title = !title ? `MKY - BY MaKarastY ${randomItem('heart')}` : title
 	document.body.style.backgroundImage = !bcimg ? '' : `url(${randomItem(bcimg)}`
 	clearInterval(a)
-	a = setInterval(
-		() => {
-			document.body.style.backgroundImage = `url(${randomItem(bcimg)}`
-		}, 8000)
-	!bc ? document.querySelector('.large-header').style.removeProperty('background')
+	a = setInterval(() => { document.body.style.backgroundImage = `url(${randomItem(bcimg)}` }, 8000)
+	!bc
+		? document.querySelector('.large-header').style.removeProperty('background')
 		: document.querySelector('.large-header').style.background = 'rgb(0, 0, 0)'
 	canv = options.canv
 	document.getElementById("pash").style.visibility = mky ? 'hidden' : 'visible'
@@ -158,7 +147,6 @@ function SetTheme(options = {}) {
 }
 document.onkeydown = (e) => {
 	document.title = e.key === ' ' ? `MKY - BY MaKarastY ${randomItem('cat')}` : `MKY - BY MaKarastY ${randomItem('heart')}`
-
 	if (e.key === 'Backspace') {
 		if (i < 5) return i++
 		let _text = randomItem('text')
@@ -251,46 +239,17 @@ document.onkeydown = (e) => {
 		}
 	}
 }
-document.addEventListener('visibilitychange',
-	() => {
-		document.title = `MKY - BY MaKarastY ${heart()}`
-	}, false
-)
+document.addEventListener('visibilitychange', () => { document.title = `MKY - BY MaKarastY ${heart()}` }, false)
 window.addEventListener('resize', () => initCanvas())
-let canvas = document.getElementById('nokey'),
-	can_w = parseInt(canvas.getAttribute('width')),
-	can_h = parseInt(canvas.getAttribute('height')),
-	ctx = canvas.getContext('2d')
-
-let ball = {
-	x: 0,
-	y: 0,
-	vx: 0,
-	vy: 0,
-	r: 0,
-	alpha: 1,
-	phase: 0
-}
-
-let R = 2,
-	balls = [],
-	alpha_f = 1,
-	dis_limit = 260,
-	mouse_ball = {
-		x: 0,
-		y: 0,
-		vx: 0,
-		vy: 0,
-		r: 0,
-		type: 'mouse'
-	}
-
-const randomSidePos = (length) => { return Math.ceil(Math.random() * length) }
-const randomArrayItem = (arr) => { return arr[Math.floor(Math.random() * arr.length)] }
-const randomNumFrom = (min, max) => { return Math.random() * (max - min) + min }
-const getDisOf = (b1, b2) => { return Math.sqrt(Math.abs(b1.x - b2.x) ** 2 + Math.abs(b1.y - b2.y) ** 2) }
+let canvas = document.getElementById('nokey'), can_w = parseInt(canvas.getAttribute('width')), can_h = parseInt(canvas.getAttribute('height')), ctx = canvas.getContext('2d')
+let ball = { x: 0, y: 0, vx: 0, vy: 0, r: 0, alpha: 1, phase: 0 }
+let R = 2, balls = [], alpha_f = 1, dis_limit = 260, mouse_ball = { x: 0, y: 0, vx: 0, vy: 0, r: 0, type: 'mouse' }
+const randomSidePos = length => Math.ceil(Math.random() * length)
+const randomArrayItem = arr => arr[Math.floor(Math.random() * arr.length)]
+const randomNumFrom = (min, max) => Math.random() * (max - min) + min
+const getDisOf = (b1, b2) => Math.sqrt(Math.abs(b1.x - b2.x) ** 2 + Math.abs(b1.y - b2.y) ** 2)
 const addBallIfy = () => { if (balls.length < dotstospawn) balls.push(getRandomBall()) }
-const getRandomSpeed = (pos) => {
+const getRandomSpeed = pos => {
 	switch (pos) {
 		case 'top': return [randomNumFrom(-2, 2), randomNumFrom(0.05, 2)]
 		case 'right': return [randomNumFrom(-2, -0.05), randomNumFrom(-2, 2)]
@@ -380,15 +339,7 @@ function render() {
 }
 function initBalls(num) {
 	for (let i = 1; i <= num; i++) {
-		balls.push({
-			x: randomSidePos(can_w),
-			y: randomSidePos(can_h),
-			vx: getRandomSpeed('top')[0],
-			vy: getRandomSpeed('top')[1],
-			r: R,
-			alpha: 1,
-			phase: randomNumFrom(0, 10)
-		})
+		balls.push({ x: randomSidePos(can_w), y: randomSidePos(can_h), vx: getRandomSpeed('top')[0], vy: getRandomSpeed('top')[1], r: R, alpha: 1, phase: randomNumFrom(0, 10) })
 	}
 }
 function initCanvas() {
