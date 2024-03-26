@@ -1,114 +1,44 @@
 <!DOCTYPE html>
-<html lang="ua">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8" />
-	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>MKY - BY MaKarastY 💖</title>
-	<meta name="description" content="Офицальный вебсайт пользователя MaKarastY" />
+	<title>MKY starlight</title>
+	<meta name="description" content="Официальный вебсайт пользователя MaKarastY" />
 	<meta name="keywords"
-		content="MaKarastY,makarasty,maxkarasty,karasty,MaKarastY#6177,makarasty#6177,@makarasty,@MaKarastY;MaKarastY;makarasty;maxkarasty;karasty;MaKarastY#6177;makarasty#6177;@makarasty;@MaKarastY" />
+		content="@karasty,MaKarastY,makarasty,maxkarasty,karasty,MaKarastY#6177,makarasty#6177,@makarasty,@MaKarastY" />
 	<meta name="author" content="MaKarastY" />
-	<link rel="shortcut icon" href="mky.png">
+	<link rel="shortcut icon" href="./common/mky.png">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
 		integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
 		crossorigin="anonymous" />
+	<link rel="stylesheet" href="./common/styles/styles.css" />
 </head>
-<style>
-	html {
-		overflow: hidden;
-	}
-
-	.unselectable {
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-	}
-
-	body {
-		margin: 0;
-		background: rgb(0, 0, 0);
-		font-weight: 400;
-		font-size: 1em;
-		line-height: 1.25;
-		font-family: 'Raleway', Calibri, Arial, sans-serif;
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
-
-	a {
-		color: #e6cb33;
-		text-decoration: none;
-	}
-
-	.large-header {
-		position: relative;
-		width: 100%;
-		overflow: hidden;
-		z-index: 1;
-	}
-
-	.main {
-		position: absolute;
-		margin: 0;
-		padding: 0;
-		color: #f9f1e9;
-		text-align: center;
-		top: 50%;
-		left: 50%;
-		-webkit-transform: translate3d(-50%, -50%, 0);
-		transform: translate3d(-50%, -50%, 0);
-	}
-
-	.shadow {
-		text-shadow: black 0.1em 0.1em 0.1em;
-	}
-
-	.demo .main {
-		text-transform: uppercase;
-		font-size: 4.2em;
-		letter-spacing: 0.1em;
-	}
-
-	@media only screen and (max-width: 768px) {
-		.demo .main {
-			font-size: 3em;
-		}
-	}
-</style>
 
 <body>
-	<div id="mky" class="demo">
+	<noscript>Please enable JavaScript!</noscript>
+	<img id="any-img" />
+	<div class="main" id="main-page">
 		<div class="large-header">
-			<canvas id="nokey"></canvas>
-			<h1 class="main unselectable">MKY
-				<div class="unselectable" style="font-size: 24px;">
-					<a target="_blank" href="relinks/discord.html" style="font-size: 32px;"
+			<canvas id="star-fall"></canvas>
+			<h1 class="title">MKY
+				<div style="font-size: 26px;">
+					<a target="_blank" href="./common/pages/discord.html" style="font-size: 32px;"
 						class="fab fa-discord fa-lg"></a>
-					<a target="_blank" href="relinks/github.html" style="font-size: 33px;"
+					<a target="_blank" href="./common/pages/github.html" style="font-size: 33px;"
 						class="fab fa-github fa-lg"></a>
-					<a target="_blank" href="relinks/telegram.html" style="font-size: 33px;"
+					<a target="_blank" href="./common/pages/telegram.html" style="font-size: 33px;"
 						class="fab fa-telegram fa-lg"></a>
-					<h5>🇺🇦 Please Close The Sky Over Ukraine</h5>
+					<h5>PLEASE CLOSE THE SKY OVER UKRAINE</h5>
 				</div>
 			</h1>
 		</div>
+		<p id="soft-data"></p>
 	</div>
-	<div id="pash" class="demo">
-		<h1 class="main unselectable shadow">
-			<div class="unselectable" style="font-size: 24px;">
-				<h4 class="shadow" id="text1"></h4>
-				<h5 class="shadow" id="text2"></h5>
-				<h6 class="shadow" id="text3"></h6>
-			</div>
-		</h1>
-	</div>
-	<h1 id="onjs" class="main-title unselectable">Turn on JavaScript</h1>
 </body>
-<script src="main.js"></script>
+
+<script src="./common/index.js"></script>
 
 </html>
