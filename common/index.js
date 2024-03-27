@@ -32,7 +32,6 @@ var extraBallsCount = 0
 var extraBallsSpeed = 0
 
 var enterPressCounter = 0
-var enterPress = false
 
 const HsvSaturation = 1;
 const HsvValue = 1;
@@ -136,8 +135,20 @@ function onKeyDownEvent(event) {
 		}
 
 		case 'Backspace': case 'Delete': {
+			letsRainbow = false
+			titleEmoji = null
+
 			extraBallsCount = 0
 			extraBallsSpeed = 0
+			enterPressCounter = 0
+
+			letsUpdateCanvas = true
+
+			clearInterval(enterInterval)
+
+			setTitle(mainTitle, null)
+			setHeaderVisibility(true)
+			setImgVisibility(false, null)
 			break
 		}
 		case 'Meta': case 'ContextMenu': {
