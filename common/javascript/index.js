@@ -52,12 +52,11 @@ const blockedKeysForMain = new Set(['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F
 const allBackgrounds = ['(1).jpeg', '(1).jpg', '(1).png', '(10).jpg', '(11).jpg', '(12).jpg', '(13).jpg', '(14).jpg', '(15).jpg', '(16).jpg', '(17).jpg', '(18).jpg', '(19).jpg', '(2).jpeg', '(2).jpg', '(2).png', '(20).jpg', '(21).jpg', '(22).jpg', '(23).jpg', '(24).jpg', '(25).jpg', '(26).jpg', '(27).jpg', '(28).jpg', '(29).jpg', '(3).jpeg', '(3).jpg', '(30).jpg', '(31).jpg', '(32).jpg', '(33).jpg', '(34).jpg', '(35).jpg', '(36).jpg', '(37).jpg', '(38).jpg', '(39).jpg', '(4).jpg', '(40).jpg', '(41).jpg', '(42).jpg', '(43).jpg', '(44).jpg', '(45).jpg', '(46).jpg', '(47).jpg', '(48).jpg', '(49).jpg', '(5).jpg', '(50).jpg', '(51).jpg', '(52).jpg', '(53).jpg', '(54).jpg', '(56).jpg', '(57).jpg', '(58).jpg', '(59).jpg', '(6).jpg', '(60).jpg', '(61).jpg', '(62).jpg', '(63).jpg', '(64).jpg', '(65).jpg', '(66).jpg', '(67).jpg', '(68).jpg', '(69).jpg', '(7).jpg', '(70).jpg', '(71).jpg', '(72).jpg', '(73).jpg', '(8).jpg', '(9).jpg']
 
 /**
- * @param {Event} event 
- * @returns 
+ * @param {Event} event
  */
 function breakEvent(event) {
-	event.preventDefault()
-	return false
+	//event.preventDefault()
+	//return false
 }
 
 document.addEventListener('dragstart', breakEvent);
@@ -65,8 +64,8 @@ document.addEventListener('selectstart', breakEvent);
 document.addEventListener('contextmenu', breakEvent);
 
 /**
- * @param {string} title 
- * @param {?string} emoji 
+ * @param {string} title
+ * @param {?string} emoji
  */
 function setTitle(title, emoji = null) {
 	titleEmoji = emoji
@@ -78,15 +77,15 @@ const mainPage = document.getElementById('main-page')
 const anyImg = /**@type {HTMLImageElement}*/(document.getElementById('any-img'))
 
 /**
- * @param {boolean} visible 
+ * @param {boolean} visible
  */
 function setHeaderVisibility(visible) {
 	mainPage.style.display = visible ? 'block' : 'none'
 }
 
 /**
- * @param {boolean} visible 
- * @param {?string} url 
+ * @param {boolean} visible
+ * @param {?string} url
  */
 function setImgVisibility(visible, url = null) {
 	anyImg.style.display = visible ? 'block' : 'none'
@@ -100,8 +99,7 @@ setImgVisibility(false, null)
 var enterInterval
 
 /**
- * @param {KeyboardEvent} event 
- * @returns 
+ * @param {KeyboardEvent} event
 */
 function onKeyDownEvent(event) {
 	//console.log(event.key);
@@ -205,7 +203,7 @@ function onKeyDownEvent(event) {
 document.addEventListener('keydown', onKeyDownEvent);
 
 /**
- * @param {string} emoji 
+ * @param {string} emoji
  * @returns {[number, number, number]}
  */
 function getEmojiColor(emoji) {
@@ -239,7 +237,7 @@ function getEmojiColor(emoji) {
 var maybeSetIntervalId
 
 /**
- * @param {Event} event 
+ * @param {Event} event
  */
 function visibilityChangeEvent(event) {
 	clearInterval(maybeSetIntervalId)
@@ -255,7 +253,7 @@ function visibilityChangeEvent(event) {
 }
 
 /**
- * @param {Event} event 
+ * @param {Event} event
  */
 function onResize(event) {
 	initCanvas()
@@ -265,7 +263,7 @@ document.addEventListener('visibilitychange', visibilityChangeEvent);
 window.addEventListener('resize', onResize);
 
 /**
- * @param {any[]} array 
+ * @param {any[]} array
  * @returns
  */
 function randomFromArray(array) {
@@ -273,39 +271,37 @@ function randomFromArray(array) {
 }
 
 /**
- * @returns 
+ * @returns
  */
 function getRandomHeart() {
 	return randomFromArray(heartsEmojis)
 }
 
 /**
- * @returns 
+ * @returns
  */
 function getRandomCat() {
 	return randomFromArray(catsEmojis)
 }
 
 /**
- * @param {number} length 
- * @returns 
+ * @param {number} length
  */
 function randomSidePos(length) {
 	return Math.round(Math.random() * length)
 }
 
 /**
- * @param {number} min 
- * @param {number} max 
- * @returns 
+ * @param {number} min
+ * @param {number} max
+ * @returns
  */
 function randomNumberFrom(min, max) {
 	return Math.random() * (max - min) + min
 }
 
 /**
- * @param {number} i 
- * @returns 
+ * @param {number} i
  */
 function generateGradientColor(i) {
 	const hue = i % 360;
@@ -358,9 +354,8 @@ const ballRadius = 1
 const lineDistanceLimit = 290
 
 /**
- * @param {IDefaultBall} ball1 
- * @param {IDefaultBall} ball2 
- * @returns 
+ * @param {IDefaultBall} ball1
+ * @param {IDefaultBall} ball2
  */
 function getDistanceOf(ball1, ball2) {
 	const dx = ball1.x - ball2.x;
@@ -376,7 +371,7 @@ function addNewBalls() {
 }
 
 /**
- * @param {IDirectionsEnum} pos 
+ * @param {IDirectionsEnum} pos
  * @returns {[number, number]}
  */
 function getRandomSpeeds(pos) {
@@ -455,8 +450,8 @@ function getRandomBall() {
 }
 
 /**
- * @param {number} num 
-*/
+ * @param {number} num
+ */
 function initBalls(num) {
 	for (let i = 1; i == num; i++) {
 		balls.push({
@@ -470,6 +465,7 @@ function initBalls(num) {
 		})
 	}
 }
+
 function updateBalls() {
 	const newBalls = [];
 	const maxX = maxPossibleWidth + 200;
@@ -532,7 +528,7 @@ var fpsTime = 0;
 const softData = document.getElementById('soft-data');
 
 /**
- * @param {number} nexFrameTime 
+ * @param {number} nexFrameTime
  */
 function renderCanvasNewFrame(nexFrameTime) {
 	if (letsUpdateCanvas) {
