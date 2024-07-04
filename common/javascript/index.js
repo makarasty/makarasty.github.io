@@ -87,7 +87,7 @@ function setHeaderVisibility(visible) {
  * @param {boolean} visible
  * @param {?string} url
  */
-function setImgVisibility(visible, url = null, customImg = true) {
+function setImgVisibility(visible, url = null, customImg = null) {
 	anyImg.style.display = visible ? 'block' : 'none'
 
 	if (url) {
