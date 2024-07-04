@@ -87,10 +87,45 @@ function setHeaderVisibility(visible) {
  * @param {boolean} visible
  * @param {?string} url
  */
-function setImgVisibility(visible, url = null) {
+function setImgVisibility(visible, url = null, customImg = true) {
 	anyImg.style.display = visible ? 'block' : 'none'
+
 	if (url) {
 		anyImg.src = `./common/imgs/%20 ${url}`;
+	}
+
+	if (customImg) {
+		anyImg.src = customImg
+	}
+}
+
+async function getImgFromReddit(base = 'https://www.reddit.com/r/Animewallpaper/search.json?q=flair_name%3A%22Desktop%22&', offset = 86) {
+	const sortOptions = ['hot', 'new', 'top'];
+	const sort = sortOptions[Math.floor(Math.random() * sortOptions.length)];
+	const randomOffset = Math.floor(Math.random() * offset);
+
+	const url = `${base}restrict_sr=1&sort=${sort}&limit=100&count=100&after=t3_${randomOffset}`;
+
+	try {
+		const response = await fetch(url);
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		const data = await response.json();
+		const posts = data.data.children
+			.filter(post => post.data.post_hint === 'image')
+			.map(post => post.data.url);
+
+		if (posts.length === 0) {
+			throw new Error("Не удалось найти подходящие посты");
+		}
+
+		return posts[Math.floor(Math.random() * posts.length)];
+	} catch (error) {
+		console.error('Ошибка при выполнении запроса:', error);
+		throw new Error("Произошла ошибка при получении данных")
 	}
 }
 
@@ -98,14 +133,61 @@ setImgVisibility(false, null)
 
 var enterInterval
 
+const possibleKeys = new Set(['a', 'n', 'i', 'm', 'e', 'w', 'l', 'p', 'e', 'r', 's'])
+let lastInput = ''
+
 /**
  * @param {KeyboardEvent} event
  */
-function onKeyDownEvent(event) {
+async function onKeyDownEvent(event) {
 	//console.log(event.key);
 
 	if (blockedKeysForMain.has(event.key.toUpperCase())) {
 		return breakEvent(event)
+	}
+
+	if (possibleKeys.has(event.key.toLowerCase())) {
+		lastInput += event.key.toLowerCase()
+	} else {
+		lastInput = ''
+	}
+
+	if (lastInput.endsWith("wallpapers")) {
+		const amineWallpaperURL = await getImgFromReddit('https://www.reddit.com/r/wallpaper.json?')
+
+		letsUpdateCanvas = false
+		letsRainbow = false
+
+		setHeaderVisibility(false)
+		context.clearRect(0, 0, maxPossibleWidth, maxPossibleHeight);
+
+		setImgVisibility(true, undefined, amineWallpaperURL)
+
+		clearInterval(enterInterval)
+
+		enterInterval = setInterval(async () => {
+			const amineWallpaperURL = await getImgFromReddit('https://www.reddit.com/r/wallpaper.json?')
+			setImgVisibility(true, undefined, amineWallpaperURL)
+		}, 10000)
+	}
+
+	if (lastInput.endsWith("anime")) {
+		const amineWallpaperURL = await getImgFromReddit()
+
+		letsUpdateCanvas = false
+		letsRainbow = false
+
+		setHeaderVisibility(false)
+		context.clearRect(0, 0, maxPossibleWidth, maxPossibleHeight);
+
+		setImgVisibility(true, undefined, amineWallpaperURL)
+
+		clearInterval(enterInterval)
+
+		enterInterval = setInterval(async () => {
+			const amineWallpaperURL = await getImgFromReddit()
+			setImgVisibility(true, undefined, amineWallpaperURL)
+		}, 10000)
 	}
 
 	switch (event.key) {
