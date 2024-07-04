@@ -360,26 +360,25 @@ const lineDistanceLimit = 290
 function getDistanceOf(ball1, ball2) {
 	const dx = ball1.x - ball2.x;
 	const dy = ball1.y - ball2.y;
+
 	return Math.hypot(dx, dy);
 }
 
 function addNewBalls() {
-	if (balls.length < (maximumBalls + extraBallsCount)) {
-		const randomBall = getRandomBall()
-		balls.push(randomBall)
+	if (balls.length < maximumBalls + extraBallsCount) {
+		balls.push(getRandomBall())
 	}
 }
 
 /**
  * @param {IDirectionsEnum} pos
  * @returns {[number, number]}
- */
+*/
 function getRandomSpeeds(pos) {
-	const minVxLeft = 0.05, maxVxLeft = 2 + extraBallsSpeed;
-	const minVxRight = -2 - extraBallsSpeed, maxVxRight = -0.05;
-	const minVyBottom = -1.5 - extraBallsSpeed, maxVyBottom = -0.05;
-	const minVyTop = 0.05, maxVyTop = 1.5 + extraBallsSpeed;
-
+	const minVxLeft = 0.04, maxVxLeft = 1.5 + extraBallsSpeed;
+	const minVxRight = -1.5 - extraBallsSpeed, maxVxRight = -0.04;
+	const minVyBottom = -1.5 - extraBallsSpeed, maxVyBottom = -0.04;
+	const minVyTop = 0.04, maxVyTop = 1.5 + extraBallsSpeed;
 	let minVx, maxVx, minVy, maxVy;
 
 	switch (pos) {
@@ -467,9 +466,9 @@ function initBalls(num) {
 }
 
 function updateBalls() {
-	const newBalls = [];
 	const maxX = maxPossibleWidth + 200;
 	const maxY = maxPossibleHeight + 200;
+	const newBalls = [];
 
 	for (let i = 0, len = balls.length; i < len; i++) {
 		const ball = balls[i];
@@ -494,8 +493,9 @@ function renderLines() {
 		rainbowIndex %= 360 * 2
 	}
 
-	for (let i = 0, len = balls.length; i < len; i++) {
-		for (let j = i + 1; j < len; j++) {
+	for (let i = 0, len = balls.length - 1; i < len; i++) {
+		for (let j = i + 1; j < len + 1; j++) {
+
 			const fraction = getDistanceOf(balls[i], balls[j]) / lineDistanceLimit;
 			if (fraction < 1) {
 				const alpha = (0.85 - fraction).toString();
