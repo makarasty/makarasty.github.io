@@ -100,7 +100,7 @@ var enterInterval
 
 /**
  * @param {KeyboardEvent} event
-*/
+ */
 function onKeyDownEvent(event) {
 	//console.log(event.key);
 
