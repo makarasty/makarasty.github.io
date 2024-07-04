@@ -55,8 +55,8 @@ const allBackgrounds = ['(1).jpeg', '(1).jpg', '(1).png', '(10).jpg', '(11).jpg'
  * @param {Event} event
  */
 function breakEvent(event) {
-	//event.preventDefault()
-	//return false
+	event.preventDefault()
+	return false
 }
 
 document.addEventListener('dragstart', breakEvent);
