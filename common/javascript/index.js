@@ -99,47 +99,36 @@ function setImgVisibility(visible, url = null, customImg = null) {
 	}
 }
 
-function getImgFromReddit(base = 'https://www.reddit.com/r/Animewallpaper/search.json?q=flair_name%3A%22Desktop%22&', offset = 86) {
-	return new Promise((resolve, reject) => {
-		const sortOptions = ['hot', 'new', 'top'];
-		const sort = sortOptions[Math.floor(Math.random() * sortOptions.length)];
-		const randomOffset = Math.floor(Math.random() * offset);
+async function getImgFromReddit(base = 'https://www.reddit.com/r/Animewallpaper/search.json?q=flair_name%3A%22Desktop%22&', offset = 86) {
+	const sortOptions = ['hot', 'new', 'top'];
+	const sort = sortOptions[Math.floor(Math.random() * sortOptions.length)];
+	const randomOffset = Math.floor(Math.random() * offset);
 
-		const callbackName = 'jsonpCallback_' + Math.round(100000 * Math.random());
+	const url = `${base}restrict_sr=1&sort=${sort}&limit=100&count=100&after=t3_${randomOffset}`;
 
-		window[callbackName] = function (data) {
-			delete window[callbackName];
-			document.body.removeChild(script);
+	const proxy = 'https://corsproxy.io/?' + encodeURIComponent(url);
 
-			try {
-				const posts = data.data.children
-					.filter(post => post.data.post_hint === 'image')
-					.map(post => post.data.url);
+	try {
+		const response = await fetch(proxy);
 
-				if (posts.length === 0) {
-					reject(new Error("Не удалось найти подходящие посты"));
-					return;
-				}
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
 
-				const randomPost = posts[Math.floor(Math.random() * posts.length)];
-				resolve(randomPost);
-			} catch (error) {
-				console.error('Ошибка при обработке данных:', error);
-				reject(new Error("Произошла ошибка при обработке данных"));
-			}
-		};
+		const data = await response.json();
+		const posts = data.data.children
+			.filter(post => post.data.post_hint === 'image')
+			.map(post => post.data.url);
 
-		const url = `${base}sort=${sort}&limit=100&count=100&after=t3_${randomOffset}&jsonp=${callbackName}`;
+		if (posts.length === 0) {
+			throw new Error("Не удалось найти подходящие посты");
+		}
 
-		const script = document.createElement('script');
-		script.src = url;
-		script.onerror = function () {
-			delete window[callbackName];
-			document.body.removeChild(script);
-			reject(new Error("Произошла ошибка при получении данных"));
-		};
-		document.body.appendChild(script);
-	});
+		return posts[Math.floor(Math.random() * posts.length)];
+	} catch (error) {
+		console.error('Ошибка при выполнении запроса:', error);
+		throw new Error("Произошла ошибка при получении данных")
+	}
 }
 
 setImgVisibility(false, null)
