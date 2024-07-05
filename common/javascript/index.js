@@ -43,6 +43,20 @@ const heartsEmojis = ['💗', '🧡', '💛', '💚', '💙', '💜', '🤎', '�
 const catsEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾']
 
 /**
+ * @type {number}
+ */
+var enterInterval
+
+var lastInput = ''
+
+/**
+ * @type {?number}
+ */
+var maybeSetIntervalId
+
+const possibleKeys = new Set(['anime', 'wallpapers'].map(a => a.split()).join())
+
+/**
  * @type {IDirectionsEnum[]}
  */
 const possibleDirections = ['top', 'right', 'bottom', 'left']
@@ -50,6 +64,29 @@ const possibleDirections = ['top', 'right', 'bottom', 'left']
 const blockedKeysForMain = new Set(['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F12', 'Alt']);
 
 const allBackgrounds = ['(1).jpeg', '(1).jpg', '(1).png', '(10).jpg', '(11).jpg', '(12).jpg', '(13).jpg', '(14).jpg', '(15).jpg', '(16).jpg', '(17).jpg', '(18).jpg', '(19).jpg', '(2).jpeg', '(2).jpg', '(2).png', '(20).jpg', '(21).jpg', '(22).jpg', '(23).jpg', '(24).jpg', '(25).jpg', '(26).jpg', '(27).jpg', '(28).jpg', '(29).jpg', '(3).jpeg', '(3).jpg', '(30).jpg', '(31).jpg', '(32).jpg', '(33).jpg', '(34).jpg', '(35).jpg', '(36).jpg', '(37).jpg', '(38).jpg', '(39).jpg', '(4).jpg', '(40).jpg', '(41).jpg', '(42).jpg', '(43).jpg', '(44).jpg', '(45).jpg', '(46).jpg', '(47).jpg', '(48).jpg', '(49).jpg', '(5).jpg', '(50).jpg', '(51).jpg', '(52).jpg', '(53).jpg', '(54).jpg', '(56).jpg', '(57).jpg', '(58).jpg', '(59).jpg', '(6).jpg', '(60).jpg', '(61).jpg', '(62).jpg', '(63).jpg', '(64).jpg', '(65).jpg', '(66).jpg', '(67).jpg', '(68).jpg', '(69).jpg', '(7).jpg', '(70).jpg', '(71).jpg', '(72).jpg', '(73).jpg', '(8).jpg', '(9).jpg']
+
+var balls = []
+var maximumBalls = 0
+
+const ballRadius = 1
+const lineDistanceLimit = 290
+
+var rainbowIndex = -1
+var fpsTime = 0;
+
+const canvas = /**@type {HTMLCanvasElement}*/(document.getElementById('star-fall'));
+const context = canvas.getContext('2d')
+
+var maxPossibleWidth = parseInt(canvas.getAttribute('width'))
+var maxPossibleHeight = parseInt(canvas.getAttribute('height'))
+
+const softData = document.getElementById('soft-data');
+
+const mainPage = document.getElementById('main-page')
+
+const anyImg = /**@type {HTMLImageElement}*/(document.getElementById('any-img'))
+
+setImgVisibility(false, null)
 
 /**
  * @param {Event} event
@@ -59,10 +96,6 @@ function breakEvent(event) {
 	return false
 }
 
-document.addEventListener('dragstart', breakEvent);
-document.addEventListener('selectstart', breakEvent);
-document.addEventListener('contextmenu', breakEvent);
-
 /**
  * @param {string} title
  * @param {?string} emoji
@@ -71,10 +104,6 @@ function setTitle(title, emoji = null) {
 	titleEmoji = emoji
 	document.title = `${title} ${emoji || ''}`
 }
-
-const mainPage = document.getElementById('main-page')
-
-const anyImg = /**@type {HTMLImageElement}*/(document.getElementById('any-img'))
 
 /**
  * @param {boolean} visible
@@ -88,21 +117,21 @@ function setHeaderVisibility(visible) {
  * @param {?string} url
  */
 function setImgVisibility(visible, url = null, customImg = null) {
-	anyImg.style.display = visible ? 'block' : 'none'
+	const display = visible ? 'block' : 'none';
+	const src = url ? `./common/imgs/%20 ${url}` : customImg;
 
-	if (url) {
-		anyImg.src = `./common/imgs/%20 ${url}`;
-	}
-
-	if (customImg) {
-		anyImg.src = customImg
-	}
+	anyImg.style.display = display;
+	anyImg.src = src;
 }
 
-async function getImgFromReddit(base = 'https://www.reddit.com/r/Animewallpaper/search.json?q=flair_name%3A%22Desktop%22&', offset = 86) {
+/**
+ * @param {string} base
+ * @param {number?} offset
+ */
+async function getImgFromReddit(base, offset = 86) {
 	const sortOptions = ['hot', 'new', 'top'];
-	const sort = sortOptions[Math.floor(Math.random() * sortOptions.length)];
-	const randomOffset = Math.floor(Math.random() * offset);
+	const sort = randomFromArray(sortOptions);
+	const randomOffset = randomNumberFrom(0, offset);
 
 	const url = `${base}restrict_sr=1&sort=${sort}&limit=100&count=100&after=t3_${randomOffset}`;
 
@@ -121,22 +150,43 @@ async function getImgFromReddit(base = 'https://www.reddit.com/r/Animewallpaper/
 			.map(post => post.data.url);
 
 		if (posts.length === 0) {
-			throw new Error("Не удалось найти подходящие посты");
+			throw new Error("Failed to find suitable posts");
 		}
 
-		return posts[Math.floor(Math.random() * posts.length)];
+		return randomFromArray(posts);
 	} catch (error) {
-		console.error('Ошибка при выполнении запроса:', error);
-		throw new Error("Произошла ошибка при получении данных")
+		console.error('Error during request execution:', error);
+
+		throw new Error("An error occurred while retrieving data")
 	}
 }
 
-setImgVisibility(false, null)
+function defaultAllClear() {
+	letsUpdateCanvas = false
+	letsRainbow = false
 
-var enterInterval
+	setHeaderVisibility(false)
+	context.clearRect(0, 0, maxPossibleWidth, maxPossibleHeight);
 
-const possibleKeys = new Set(['a', 'n', 'i', 'm', 'e', 'w', 'l', 'p', 'e', 'r', 's'])
-let lastInput = ''
+	clearInterval(enterInterval)
+}
+
+/**
+ * @param {string} redditURL
+ */
+async function defaultImgFromReddit(redditURL) {
+	const amineWallpaperURL = await getImgFromReddit(redditURL)
+
+	defaultAllClear()
+
+	setImgVisibility(true, undefined, amineWallpaperURL)
+
+	enterInterval = setInterval(async () => {
+		const amineWallpaperURL = await getImgFromReddit(redditURL)
+
+		setImgVisibility(true, undefined, amineWallpaperURL)
+	}, 10000)
+}
 
 /**
  * @param {KeyboardEvent} event
@@ -155,41 +205,13 @@ async function onKeyDownEvent(event) {
 	}
 
 	if (lastInput.endsWith("wallpapers")) {
-		const amineWallpaperURL = await getImgFromReddit('https://www.reddit.com/r/wallpaper.json?')
-
-		letsUpdateCanvas = false
-		letsRainbow = false
-
-		setHeaderVisibility(false)
-		context.clearRect(0, 0, maxPossibleWidth, maxPossibleHeight);
-
-		setImgVisibility(true, undefined, amineWallpaperURL)
-
-		clearInterval(enterInterval)
-
-		enterInterval = setInterval(async () => {
-			const amineWallpaperURL = await getImgFromReddit('https://www.reddit.com/r/wallpaper.json?')
-			setImgVisibility(true, undefined, amineWallpaperURL)
-		}, 10000)
+		const thatRedisUrl = 'https://www.reddit.com/r/wallpaper.json?'
+		await defaultImgFromReddit(thatRedisUrl)
 	}
 
 	if (lastInput.endsWith("anime")) {
-		const amineWallpaperURL = await getImgFromReddit()
-
-		letsUpdateCanvas = false
-		letsRainbow = false
-
-		setHeaderVisibility(false)
-		context.clearRect(0, 0, maxPossibleWidth, maxPossibleHeight);
-
-		setImgVisibility(true, undefined, amineWallpaperURL)
-
-		clearInterval(enterInterval)
-
-		enterInterval = setInterval(async () => {
-			const amineWallpaperURL = await getImgFromReddit()
-			setImgVisibility(true, undefined, amineWallpaperURL)
-		}, 10000)
+		const thatRedisUrl = 'https://www.reddit.com/r/Animewallpaper/search.json?q=flair_name%3A%22Desktop%22&'
+		await defaultImgFromReddit(thatRedisUrl)
 	}
 
 	switch (event.key) {
@@ -234,29 +256,20 @@ async function onKeyDownEvent(event) {
 			break
 		}
 		case 'Meta': case 'ContextMenu': {
-			letsRainbow = !letsRainbow
-			if (letsRainbow) {
-				setTitle(mainTitle, '🌈')
-			} else {
-				setTitle(mainTitle)
-			}
+			letsRainbow = !letsRainbow;
+			setTitle(mainTitle, letsRainbow ? '🌈' : null);
 			break
 		}
 		case 'Enter': {
-			enterPressCounter++
-			enterPressCounter %= 30
+			enterPressCounter = (enterPressCounter + 1) % 30;
 
 			if (enterPressCounter === 10) {
-				letsUpdateCanvas = false
-				letsRainbow = false
+				defaultAllClear()
 
-				setHeaderVisibility(false)
-				context.clearRect(0, 0, maxPossibleWidth, maxPossibleHeight);
+				clearInterval(enterInterval)
 
 				const randomImgName = randomFromArray(allBackgrounds)
 				setImgVisibility(true, randomImgName)
-
-				clearInterval(enterInterval)
 
 				enterInterval = setInterval(() => {
 					const randomImgName = randomFromArray(allBackgrounds)
@@ -283,8 +296,6 @@ async function onKeyDownEvent(event) {
 		}
 	}
 }
-
-document.addEventListener('keydown', onKeyDownEvent);
 
 /**
  * @param {string} emoji
@@ -316,11 +327,6 @@ function getEmojiColor(emoji) {
 }
 
 /**
- * @type {?number}
- */
-var maybeSetIntervalId
-
-/**
  * @param {Event} event
  */
 function visibilityChangeEvent(event) {
@@ -330,7 +336,7 @@ function visibilityChangeEvent(event) {
 		maybeSetIntervalId = setInterval(() => {
 			const randomEmoji = randomFromArray(starsEmojis)
 			setTitle(mainTitle, randomEmoji)
-		}, 10000);
+		}, 3000);
 	} else {
 		setTitle(mainTitle)
 	}
@@ -343,27 +349,17 @@ function onResize(event) {
 	initCanvas()
 }
 
-document.addEventListener('visibilitychange', visibilityChangeEvent);
-window.addEventListener('resize', onResize);
-
 /**
  * @param {any[]} array
- * @returns
  */
 function randomFromArray(array) {
 	return array[Math.round(Math.random() * array.length)]
 }
 
-/**
- * @returns
- */
 function getRandomHeart() {
 	return randomFromArray(heartsEmojis)
 }
 
-/**
- * @returns
- */
 function getRandomCat() {
 	return randomFromArray(catsEmojis)
 }
@@ -378,7 +374,6 @@ function randomSidePos(length) {
 /**
  * @param {number} min
  * @param {number} max
- * @returns
  */
 function randomNumberFrom(min, max) {
 	return Math.random() * (max - min) + min
@@ -423,19 +418,6 @@ function generateGradientColor(i) {
 
 	return [r, g, b];
 }
-
-let canvas = /**@type {HTMLCanvasElement}*/(document.getElementById('star-fall'));
-
-let maxPossibleWidth = parseInt(canvas.getAttribute('width'))
-let maxPossibleHeight = parseInt(canvas.getAttribute('height'))
-
-const context = canvas.getContext('2d')
-
-var balls = []
-var maximumBalls = 0
-
-const ballRadius = 1
-const lineDistanceLimit = 290
 
 /**
  * @param {IDefaultBall} ball1
@@ -537,11 +519,13 @@ function getRandomBall() {
  */
 function initBalls(num) {
 	for (let i = 1; i == num; i++) {
+		const [vx, vy] = getRandomSpeeds('top');
+
 		balls.push({
 			x: randomSidePos(maxPossibleWidth),
 			y: randomSidePos(maxPossibleHeight),
-			vx: getRandomSpeeds('top')[0],
-			vy: getRandomSpeeds('top')[1],
+			vx,
+			vy,
 			r: ballRadius,
 			alpha: 0.8,
 			phase: 100
@@ -569,13 +553,8 @@ function updateBalls() {
 	balls = newBalls;
 }
 
-var rainbowIndex = -1
-
 function renderLines() {
-	if (letsRainbow) {
-		rainbowIndex += 0.3
-		rainbowIndex %= 360 * 2
-	}
+	rainbowIndex = (rainbowIndex + 0.3) % (360 * 2);
 
 	for (let i = 0, len = balls.length - 1; i < len; i++) {
 		for (let j = i + 1; j < len + 1; j++) {
@@ -589,11 +568,9 @@ function renderLines() {
 				if (letsRainbow) {
 					ballColor = generateGradientColor(rainbowIndex / 2)
 				} else {
-					if (heartsEmojis.includes(titleEmoji)) {
-						ballColor = getEmojiColor(titleEmoji)
-					} else {
-						ballColor = balls[i].y < (maxPossibleHeight / 1.85) ? '0, 0, 255' : '255, 255, 0';
-					}
+					ballColor = heartsEmojis.includes(titleEmoji)
+						? getEmojiColor(titleEmoji)
+						: balls[i].y < (maxPossibleHeight / 1.85) ? [0, 0, 255] : [255, 255, 0];
 				}
 
 				context.strokeStyle = `rgba(${ballColor}, ${alpha})`;
@@ -606,10 +583,6 @@ function renderLines() {
 		}
 	}
 }
-
-var fpsTime = 0;
-
-const softData = document.getElementById('soft-data');
 
 /**
  * @param {number} nexFrameTime
@@ -630,6 +603,7 @@ function renderCanvasNewFrame(nexFrameTime) {
 
 function initCanvas() {
 	const { innerWidth, innerHeight } = window;
+
 	canvas.width = innerWidth;
 	canvas.height = innerHeight;
 	maxPossibleWidth = innerWidth;
@@ -644,4 +618,10 @@ function initialize() {
 	requestAnimationFrame(renderCanvasNewFrame);
 }
 
-document.addEventListener('DOMContentLoaded', initialize)
+document.addEventListener('DOMContentLoaded', initialize);
+window.addEventListener('resize', onResize);
+document.addEventListener('visibilitychange', visibilityChangeEvent);
+document.addEventListener('keydown', onKeyDownEvent);
+document.addEventListener('dragstart', breakEvent);
+document.addEventListener('selectstart', breakEvent);
+document.addEventListener('contextmenu', breakEvent);
