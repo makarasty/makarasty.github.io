@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>python1</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="области-видимости-в-python">Области видимости в Python</h1>
+<p>В Python переменные могут жить в разных «пространствах имён», и то, где именно они объявлены, определяет, откуда к ним можно обратиться. Разберём основные виды областей видимости.</p>
+<h2 id="локальная-область-local-scope">1. Локальная область (Local Scope)</h2>
+<p><strong>Локальные переменные</strong> – это переменные, объявленные внутри функции (или другого блока, например, в лямбда-функции). Они доступны только внутри этой функции.</p>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">def</span> <span class="token function">greet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    message <span class="token operator">=</span> <span class="token string">"Привет, мир!"</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span>
+
+greet<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># Выведет: Привет, мир!</span>
+<span class="token comment"># print(message)  # Ошибка: message не существует вне функции</span>
+
+</code></pre>
+<p><em>Почему это важно?</em><br>
+Локальные переменные позволяют избежать конфликтов имён и сохраняют данные, которые нужны только внутри конкретной функции.</p>
+<h2 id="глобальная-область-global-scope">2. Глобальная область (Global Scope)</h2>
+<p><strong>Глобальные переменные</strong> объявляются на верхнем уровне модуля (то есть не внутри какой-либо функции). Они доступны из любой точки программы (если не затеняются локальными переменными).</p>
+<pre class=" language-python"><code class="prism  language-python">message <span class="token operator">=</span> <span class="token string">"Привет из глобальной области!"</span>
+
+<span class="token keyword">def</span> <span class="token function">greet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span>
+
+greet<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># Выведет: Привет из глобальной области!</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span>  <span class="token comment"># Выведет: Привет из глобальной области!</span>
+
+</code></pre>
+<p><em>Особенность:</em><br>
+Если внутри функции создать переменную с тем же именем, что и глобальная, то локальная переменная будет затенять глобальную в пределах этой функции.</p>
+<pre class=" language-python"><code class="prism  language-python">message <span class="token operator">=</span> <span class="token string">"Глобальное сообщение"</span>
+
+<span class="token keyword">def</span> <span class="token function">greet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    message <span class="token operator">=</span> <span class="token string">"Локальное сообщение"</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span>
+
+greet<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># Выведет: Локальное сообщение</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span>  <span class="token comment"># Выведет: Глобальное сообщение</span>
+
+</code></pre>
+<h2 id="область-встроенных-имен-built-in-scope">3. Область встроенных имен (Built-in Scope)</h2>
+<p>Python имеет набор встроенных функций, исключений и переменных, доступных в любом месте программы, например, <code>print()</code>, <code>len()</code>, <code>range()</code> и т.д. Эти имена находятся в специальной области, которая всегда доступна, если они не затенены локальными или глобальными переменными.</p>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">def</span> <span class="token function">my_func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># Встроенная функция print доступна</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Это встроенная функция print"</span><span class="token punctuation">)</span>
+
+my_func<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+</code></pre>
+<h2 id="область-nonlocal-nonlocal-scope">4. Область nonlocal (Nonlocal Scope)</h2>
+<p>Иногда бывает нужно изменить значение переменной, объявленной во внешней (но не глобальной) функции. Для этого используется ключевое слово <code>nonlocal</code>.</p>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">def</span> <span class="token function">outer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    counter <span class="token operator">=</span> <span class="token number">0</span>
+
+    <span class="token keyword">def</span> <span class="token function">inner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">nonlocal</span> counter  <span class="token comment"># указываем, что хотим использовать переменную из внешней функции</span>
+        counter <span class="token operator">+=</span> <span class="token number">1</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Счетчик внутри inner:"</span><span class="token punctuation">,</span> counter<span class="token punctuation">)</span>
+
+    inner<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    inner<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Счетчик в outer:"</span><span class="token punctuation">,</span> counter<span class="token punctuation">)</span>
+
+outer<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+</code></pre>
+<p><em>Объяснение:</em><br>
+Здесь <code>counter</code> объявлен в функции <code>outer()</code>. Если мы не укажем <code>nonlocal</code>, то при попытке изменить <code>counter</code> в <code>inner()</code> Python создаст новую локальную переменную, и изменение не затронет переменную из <code>outer()</code>.</p>
+<h2 id="правило-legb">5. Правило LEGB</h2>
+<p>При поиске переменной Python следует правилу <strong>LEGB</strong>, которое означает:</p>
+<ul>
+<li>
+<p><strong>L</strong>ocal (Локальная) – ищем сначала в локальной области.</p>
+</li>
+<li>
+<p><strong>E</strong>nclosing (Внешняя/не локальная) – затем в областях, окружающих текущую функцию (например, в функциях-обёртках).</p>
+</li>
+<li>
+<p><strong>G</strong>lobal (Глобальная) – затем в глобальной области.</p>
+</li>
+<li>
+<p><strong>B</strong>uilt-in (Встроенная) – в области встроенных имен.</p>
+</li>
+</ul>
+<p>Пример работы правила LEGB:</p>
+<pre class=" language-python"><code class="prism  language-python">var <span class="token operator">=</span> <span class="token string">"Глобальное значение"</span>
+
+<span class="token keyword">def</span> <span class="token function">outer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    var <span class="token operator">=</span> <span class="token string">"Значение из outer"</span>
+
+    <span class="token keyword">def</span> <span class="token function">inner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        var <span class="token operator">=</span> <span class="token string">"Локальное значение в inner"</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"В inner:"</span><span class="token punctuation">,</span> var<span class="token punctuation">)</span>
+    inner<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"В outer:"</span><span class="token punctuation">,</span> var<span class="token punctuation">)</span>
+
+outer<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Глобально:"</span><span class="token punctuation">,</span> var<span class="token punctuation">)</span>
+
+</code></pre>
+<p>В данном примере переменная <code>var</code> существует в трёх областях – глобальной, в функции <code>outer</code> и в функции <code>inner</code>. В зависимости от того, где происходит обращение, выбирается соответствующее значение.</p>
+<hr>
+<h1 id="советы-и-рекомендации">Советы и рекомендации</h1>
+<ul>
+<li>
+<p><strong>Избегайте ненужного использования глобальных переменных.</strong><br>
+Глобальные переменные могут затруднить отладку и сопровождение кода, так как их изменение в разных частях программы может привести к неожиданным результатам.</p>
+</li>
+<li>
+<p><strong>Используйте аргументы функций и возвращаемые значения для обмена данными.</strong><br>
+Это помогает сделать код более понятным и модульным.</p>
+</li>
+<li>
+<p><strong>Если требуется изменить переменную из внешней функции, используйте <code>nonlocal</code>.</strong><br>
+Но применяйте это с осторожностью, так как частые изменения внешних переменных могут усложнить понимание логики кода.</p>
+</li>
+<li>
+<p><strong>Понимание правил LEGB помогает избежать ошибок с затенением переменных.</strong><br>
+Если вдруг переменная не работает так, как ожидалось, проверьте, где и как она объявлена.</p>
+</li>
+</ul>
+<hr>
+<h1 id="заключение">Заключение</h1>
+<p>Области видимости в Python – это фундаментальная концепция, которая помогает организовать код и управлять данными. Знание правил локальной, глобальной, nonlocal и встроенной областей позволяет писать более чистый, понятный и поддерживаемый код. Надеюсь, этот урок был полезен и понятен. Если есть вопросы или нужно больше примеров – спрашивайте!</p>
+<hr>
+</div>
+</body>
+
+</html>
