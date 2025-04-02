@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>netsome1</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h2 id="завдання-1">Завдання 1</h2>
+<p><strong>Ознайомитися з правилами використання вказаних команд та заповнити таблицю, описавши призначення і параметри.</strong></p>
+<h3 id="таблиця-1.-опис-команд-і-їх-параметрів">Таблиця 1. Опис команд і їх параметрів</h3>
+
+<table>
+<thead>
+<tr>
+<th>№</th>
+<th>Команда</th>
+<th>Параметри команди</th>
+<th>Призначення</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>hostname</strong></td>
+<td><em>(Без параметрів)</em></td>
+<td>Відображає <strong>ім’я</strong> (назву) комп’ютера в мережі.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>getmac</strong></td>
+<td><em>(Без параметрів)</em></td>
+<td>Відображає <strong>MAC-адреси</strong> всіх мережевих адаптерів системи.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>netstat</strong></td>
+<td>-a<br>-n<br>-p protocol</td>
+<td>- <strong>-a</strong> — показує всі активні з’єднання та порти, на які комп’ютер очікує з’єднання.<br>- <strong>-n</strong> — виводить адреси й номери портів у числовому форматі (без спроби визначати імена).<br>- <strong>-p</strong> protocol — інформація лише для вказаного протоколу (TCP/UDP).</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>arp</strong></td>
+<td>-a</td>
+<td>- <strong>-a</strong> — відображає <strong>поточну ARP-таблицю</strong> (відповідність IP-адрес та MAC-адрес).</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>nslookup</strong></td>
+<td>IP<br>name</td>
+<td>Перетворює <strong>DNS-ім’я у IP-адресу</strong> та навпаки (допомагає перевірити роботу DNS).</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>ipconfig</strong></td>
+<td>/all</td>
+<td>- <strong>/all</strong> — відображає повну інформацію про всі мережеві адаптери та параметри з’єднань (IP-адреси, маски, шлюзи, DNS, DHCP тощо).</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>net use</strong> /<br> <strong>net view</strong></td>
+<td><em>(Без параметрів або вказати ресурс)</em></td>
+<td>- <strong>net use</strong> — підключення або відключення мережевих дисків/папок.<br>- <strong>net view</strong> — перегляд списку мережевих ресурсів.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>ping</strong></td>
+<td>назва_ПК або IP<br>-t<br>-a<br>-r<br>-i</td>
+<td>- <strong>ping назва_ПК/IP</strong> — перевіряє доступність вузла.<br>- <strong>-t</strong> — безперервна перевірка (не зупиняється).<br>- <strong>-a</strong> — відображає ім’я вузла за IP-адресою.<br>- <strong>-r</strong> — записує маршрут для заданої кількості переходів.<br>- <strong>-i</strong> — встановлює час життя (TTL).</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>tracert</strong></td>
+<td>-d<br>-p<br>-w</td>
+<td>- <strong>-d</strong> — не визначає імена вузлів (тільки IP-адреси).<br>- <strong>-p</strong> — задає номер порту (рідко використовується в Windows).<br>- <strong>-w</strong> — встановлює час очікування (у мс) для кожного відгуку.</td>
+</tr>
+</tbody>
+</table><hr>
+<h2 id="завдання-2">Завдання 2</h2>
+<p><strong>Визначити мережеву назву (hostname) комп’ютера. Повну відповідь записати у звіті.</strong></p>
+<ol>
+<li>
+<p>Відкриваю <strong>Командний рядок</strong>:</p>
+<pre class=" language-bash"><code class="prism  language-bash">Win + R → cmd → Enter
+</code></pre>
+</li>
+<li>
+<p>Виконую команду:</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">hostname</span>
+
+</code></pre>
+</li>
+<li>
+<p>Система виводить назву комп’ютера:</p>
+<pre><code>MKY
+
+</code></pre>
+</li>
+<li>
+<p><strong>Відповідь</strong>:</p>
+<blockquote>
+<p>Мережеве ім’я комп’ютера: <strong>MKY</strong></p>
+</blockquote>
+</li>
+</ol>
+<hr>
+<h2 id="завдання-3">Завдання 3</h2>
+<p>*<em>Визначити значення поточних параметрів мережі (IP-адреса, маска, шлюз, DNS). Записати результат у Таблицю 2.</em></p>
+<ol>
+<li>
+<p>У <strong>Командному рядку</strong> виконую команду:</p>
+<pre class=" language-bash"><code class="prism  language-bash">ipconfig /all
+
+</code></pre>
+</li>
+<li>
+<p>Знаходжу дані про активний мережевий адаптер (Ethernet або Wi-Fi), зокрема:</p>
+<ul>
+<li>
+<p>IPv4 Address (IP-адреса)</p>
+</li>
+<li>
+<p>Subnet Mask (Маска мережі)</p>
+</li>
+<li>
+<p>Default Gateway (Основний шлюз)</p>
+</li>
+<li>
+<p>DNS Servers (Адреси DNS-серверів)</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="таблиця-2.-поточні-параметри-мережі">Таблиця 2. Поточні параметри мережі</h2>
+
+<table>
+<thead>
+<tr>
+<th>Параметр</th>
+<th>Значення</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IP-адреса</strong> (IPv4)</td>
+<td>192.168.1.101</td>
+</tr>
+<tr>
+<td><strong>Маска мережі</strong></td>
+<td>255.255.255.0</td>
+</tr>
+<tr>
+<td><strong>Основний шлюз</strong> (Gateway)</td>
+<td>192.168.1.1</td>
+</tr>
+<tr>
+<td><strong>DNS-сервер</strong></td>
+<td>8.8.8.8</td>
+</tr>
+</tbody>
+</table><p><strong>Відповідь:</strong></p>
+<ul>
+<li>IP-адреса: <code>192.168.1.101</code></li>
+<li>Маска: <code>255.255.255.0</code></li>
+<li>Шлюз: <code>192.168.1.1</code></li>
+<li>DNS: <code>8.8.8.8</code></li>
+</ul>
+</div>
+</body>
+
+</html>
