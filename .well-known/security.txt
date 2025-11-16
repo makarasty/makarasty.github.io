@@ -1,0 +1,11 @@
+# This file describes the security policy for makarasty.github.io
+# If you find a vulnerability, please report it.
+
+Contact: mailto:[makarasty@proton.me]
+Contact: https://github.com/makarasty/makarasty.github.io/issues
+
+# You can add a link to a page where you describe your security policy
+Policy: https://github.com/makarasty/makarasty.github.io/security
+
+# We do not offer bug bounties at this time.
+Hiring: https://github.com/makarasty

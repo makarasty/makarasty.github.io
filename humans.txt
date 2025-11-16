@@ -1,0 +1,15 @@
+/* TEAM */
+    Developer: MaKarastY
+    Contact: @makarasty
+    GitHub: https://github.com/makarasty
+    From: Ukraine
+
+/* THANKS */
+    Icons: Font Awesome (https://fontawesome.com/)
+    Hosting: GitHub Pages (https://pages.github.com/)
+
+/* SITE */
+    Last update: 2025-11-16
+    Language: English/Russian
+    Standards: HTML5, CSS3, JavaScript (ES6+)
+    Tech Stack: Vanilla JS
